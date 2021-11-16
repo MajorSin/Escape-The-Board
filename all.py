@@ -7,7 +7,7 @@ choice = input("\nKies een letter: ").lower()
 while choice != "a" and choice != "b" and choice != "c":
     print("\nU moet a, b of c kiezen.")
     choice = input("Kies een letter: ").lower()
-
+    
 #VRAGEN MET ANTWOORDEN INZIEN
 if choice == 'a':
     print("\n\n-----------------------")
