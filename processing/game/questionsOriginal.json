@@ -1,0 +1,26 @@
+[
+    {
+      "question": "Wat is een driehoek",
+      "answer": "Een driehoek",
+      "category": "wiskunde",
+      "toevoeging": "False"
+    },
+    {
+      "question": "Wat is de hoogste berg",
+      "answer": "Mount erverest",
+      "category": "kennis",
+      "toevoeging": "False"
+    },
+    {
+      "question": "Waarvoor wordt een discriminant gebruikt?",
+      "answer": "Herleiden",
+      "category": "wiskunde",
+      "toevoeging": "False"
+    },
+    {
+      "question": "Wat is het grootste land?",
+      "answer": "Rusland",
+      "category": "kennis",
+      "toevoeging": "False"
+    }
+  ]
