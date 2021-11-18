@@ -18,9 +18,10 @@ class UserList():
                 text(user, 192, temp)
                 temp += 50
         
-    def add_user(self, user):
+    def add_user(self, user_object):
         users = self.users
-        users.append('Speler ' + str(len(users) + 1) + ': ' + user)
+        user = user_object
+        users.append('Speler ' + str(user['id']) + ': ' + user['name'])
             
         
         
