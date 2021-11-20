@@ -1,5 +1,4 @@
 import json
-from get import *
 
 buttonPressedGetVragen = False
 buttonPressedVraagInvoegen = False
@@ -25,7 +24,8 @@ def draw():
         fill(100, 0, 53)
         text("Ga Terug",55,75)
         #JSON DATA
-        import get
+        json_file = open('questions.json')
+        list = json.loads(json_file.read())
         #PRINT RESULT
         textSize(20)
         height = 150
