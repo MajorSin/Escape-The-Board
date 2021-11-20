@@ -1,5 +1,13 @@
 import json
 
+from get import *
+from post import *
+from reset import *
+
+get = get()
+post = post()
+reset = reset()
+
 buttonPressedGetVragen = False
 buttonPressedVraagInvoegen = False
 errorScreenInput = False
@@ -17,72 +25,15 @@ def setup():
 def draw():
     #AANVRAAG VRAGEN
     if buttonPressedGetVragen:
-        background(0, 200, 0)
-        fill(0, 102, 153)
-        rect(25,25,200,80)
-        textSize(32)
-        fill(100, 0, 53)
-        text("Ga Terug",55,75)
-        #JSON DATA
-        json_file = open('questions.json')
-        list = json.loads(json_file.read())
-        #PRINT RESULT
-        textSize(20)
-        height = 150
-        questions = 1
-        for i in range(len(list)):
-            main = list[i]
-            if main['toevoeging'] == 'True':
-                text("VRAAG " + str(questions) + '\n', 80, height)
-                height += 50
-                text("Vraag is: " + main['question'], 80, height)
-                height += 50
-                text("Antwoord is: " + main['answer'], 80, height)
-                height += 50
-                text("Uit de categorie: " + main['category'], 80, height)
-                height += 50
-                text("-----------------------", 80, height)
-                height += 50
-                questions += 1
+        #get.set()
+        True
     #BUTTON OM INVOEGEN
     elif buttonPressedVraagInvoegen:
-        background(0, 200, 0)
-        fill(0, 102, 153)
-        rect(25,25,200,80)
-        textSize(32)
-        fill(100, 0, 53)
-        text("Ga Terug",55,75)
-        #INVOEGEN
-        text("Uw vraag was: " + vraag,400,175)
-        text("Het antwoord is: " + antwoord,400,220)
-        text("Bij de categorie: " + category,400,260)
-        text("Uw vraag is toegevoegd!",400,300)
+        #post.set()
+        post.display(vraag, antwoord, category)
     #RESETTEN VRAGEN
     elif buttonPressedResetten1:
-        background(0, 200, 0)
-        fill(0, 102, 153)
-        rect(25,25,200,80)
-        textSize(32)
-        fill(100, 0, 53)
-        text("Ga Terug",55,75)
-        #LEEG
-        json_file = open('questions.json')
-        list = json.loads(json_file.read())
-        toevoeging = False
-        for i in range(len(list)):
-            main = list[i]
-            if main['toevoeging'] == 'True':
-                toevoeging = True
-        if toevoeging != True:
-            text("Er zijn geen toegevoegde vragen",400,165)
-        #NIET LEEG
-        else:
-            #BEVESTIGING
-            fill(0, 102, 153)
-            rect(300,205,450,100)
-            fill(100, 0, 53)
-            text("Weet u het zeker?",400,165)
-            text("Ja",505,260)
+        True
     #ERROR SCREEN INPUT
     elif errorScreenInput:
         background(0, 200, 0)
@@ -113,16 +64,6 @@ def draw():
         fill(100, 0, 53)
         text("Vragen resetten",400,455)
         text("Kies een optie:",400,50)
-    #RESETTEN VRAGEN BEVESTIGING
-    if buttonPressedResetten2:
-        background(0, 200, 0)
-        fill(0, 102, 153)
-        rect(25,25,200,80)
-        textSize(32)
-        fill(100, 0, 53)
-        text("Ga Terug",55,75)
-        #KNOP BEVESTIGING
-        text("Vragen gereset naar originele staat!",250,205)
         
 def mousePressed():
     global buttonPressedGetVragen
@@ -131,12 +72,13 @@ def mousePressed():
     global buttonPressedResetten2
     global antwoord
     global vraag
+    global antwoord
     global category
     global errorScreenInput
     #BUTTON VOOR RUNNEN
     if 300 < mouseX < 300 + 450 and 100 < mouseY < 100 + 100 and buttonPressedGetVragen == False and buttonPressedVraagInvoegen == False and buttonPressedResetten1 == False:
-        import get
         buttonPressedGetVragen = True
+        get.display()
     #BUTTON VOOR INVOEGEN
     elif 300 < mouseX < 300 + 450 and 250 < mouseY < 250 + 100 and buttonPressedGetVragen == False and buttonPressedVraagInvoegen == False and buttonPressedResetten1 == False:
         #WELKE VRAAG TOEVOEGEN
@@ -163,14 +105,8 @@ def mousePressed():
                     errorScreenInput = True
                 #CATEGORIE VOLLEDIG
                 elif category == 'kennis' or category == "wiskunde":
+                    post.append(vraag, antwoord, category)
                     buttonPressedVraagInvoegen = True
-                    entry = {"question": vraag, "answer": antwoord,"category": category, "toevoeging": 'True'}
-                    filename = 'questions.json'
-                    with open(filename, "r") as file:
-                        data = json.load(file)
-                    data.append(entry)
-                    with open(filename, "w") as file:
-                        json.dump(data,file)
                 #ANNULERING = TERUGBRENGEN
                 else:
                     buttonPressedVraagInvoegen = False
@@ -183,10 +119,11 @@ def mousePressed():
     #BUTTON VOOR RESETTEN VRAGEN
     elif 300 < mouseX < 300 + 450 and 400 < mouseY < 400 + 100 and buttonPressedGetVragen == False and buttonPressedVraagInvoegen == False and buttonPressedResetten1 == False:
         buttonPressedResetten1 = True
+        reset.display(buttonPressedResetten2)
     #BUTTON VOOR BEVESTIGING RESETTEN VRAAG
     elif 300 < mouseX < 300 + 450 and 205 < mouseY < 205 + 100 and buttonPressedGetVragen == False and buttonPressedVraagInvoegen == False and buttonPressedResetten1 == True:
         buttonPressedResetten2 = True
-        import reset
+        reset.reset2()
     #GA TERUG
     if 25 < mouseX < 25 + 200 and 25 < mouseY < 25 + 200:
         buttonPressedGetVragen = False
