@@ -65,12 +65,24 @@ def draw():
         textSize(32)
         fill(100, 0, 53)
         text("Ga Terug",55,75)
-        #BEVESTIGING
-        fill(0, 102, 153)
-        rect(300,205,450,100)
-        fill(100, 0, 53)
-        text("Weet u het zeker?",400,165)
-        text("Ja",505,260)
+        #LEEG
+        json_file = open('questions.json')
+        list = json.loads(json_file.read())
+        toevoeging = False
+        for i in range(len(list)):
+            main = list[i]
+            if main['toevoeging'] == 'True':
+                toevoeging = True
+        if toevoeging != True:
+            text("Er zijn geen toegevoegde vragen",400,165)
+        #NIET LEEG
+        else:
+            #BEVESTIGING
+            fill(0, 102, 153)
+            rect(300,205,450,100)
+            fill(100, 0, 53)
+            text("Weet u het zeker?",400,165)
+            text("Ja",505,260)
     #ERROR SCREEN INPUT
     elif errorScreenInput:
         background(0, 200, 0)
