@@ -4,4 +4,5 @@ class UserCursor():
         
     def display(self):
         cursor_image = loadImage(self.cursor_image)
-        image(cursor_image, mouseX, mouseY)
+        if not(mouseX == 0 or mouseY == 0):
+            image(cursor_image, mouseX, mouseY)
