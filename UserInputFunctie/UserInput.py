@@ -144,7 +144,8 @@ class UserInput():
                     if user.id == int(key):
                         self.found = True
                         self.pressed = True
-                        self.current_user = int(key)
+                        self.current_user = user.id
+                        break
                     else:
                         self.found = False
                         self.pressed = True    

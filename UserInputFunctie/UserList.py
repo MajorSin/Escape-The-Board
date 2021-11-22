@@ -22,10 +22,10 @@ class UserList():
     
     def edit_user(self, user_id, name):
         user = user_id
-        
         for index in self.users:
             if index.id == user:
                 index.name = name 
+                break
                 
     def delete_user(self, user_id):
         user = user_id
