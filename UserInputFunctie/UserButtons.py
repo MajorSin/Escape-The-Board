@@ -72,11 +72,11 @@ class UserButtons():
         
         #Zorgt dat functies worden uitgevoert als een knop is geklikt.
         if (edit_l or delete_l or reset_l) and 800 <= mouseY <= 900:
-            if edit_l:
+            if edit_l and not(self.user_input.deleting):
                 if self.user_list.users:
                     self.user_input.enable_editing()
-            elif delete_l:
+            elif delete_l and not(self.user_input.editing):
                 if self.user_list.users:
                     self.user_input.enable_deleting()
-            elif reset_l and not(self.user_input.deleting):
+            elif reset_l and not(self.user_input.deleting or self.user_input.editing):
                 self.user_list.reset_list()

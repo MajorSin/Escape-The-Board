@@ -108,6 +108,7 @@ class UserInput():
         self.found = False
         self.pressed = False
         self.clicked = False
+        self.input = ''
     
     #Schakelt de status van verwijderen aan en uit.
     def enable_deleting(self):
@@ -120,6 +121,7 @@ class UserInput():
         self.pressed_enter = False
         self.pressed = False
         self.clicked = False
+        self.input = ''
 
     def keyPressed(self):
         #Korte notatie van een van de condities.

@@ -1,16 +1,8 @@
-from UserList import *
-from UserInput import *
-from UserButtons import *
-from UserCursor import *
-from User import *
-
-user_list = UserList([])
-user_input = UserInput('', user_list, User)
-user_buttons = UserButtons(user_list, user_input)
-user_cursor = UserCursor('images/cursor.png')
+import InputMain
 
 background_image = ''
 
+#Spel gereed stellen.
 def setup():
     #Grootte van het spel.
     size(1000, 1000)
@@ -22,29 +14,24 @@ def setup():
     #Achtergrond inladen.
     global background_image
     background_image = loadImage('images/horror-background.jpg')
-    
+
+#Ververst elke keer wat getekent wordt.
 def draw():
     #Dit ververst de achtergrond.
-    global background_image
     background(background_image)
     
     #Standaard font tekst.
     textFont(createFont('Arial', 50))
     
-    #Componenten van de functie tonen.
-    user_list.display()
-    user_input.display()
-    user_buttons.display()
-    user_cursor.display()
-
+    #Toont het gehele scherm van de UserInput.
+    InputMain.display()
+    
 def mousePressed():
-    #Zorgt dat klikken wordt bijgehouden.
-    user_input.mousePressed()
-    user_buttons.mousePressed()
+    InputMain.mousePressed()
     
 def keyPressed():
-    #Zorgt dat keyboard wordt bijgehouden.
-    user_input.keyPressed()
+    InputMain.keyPressed()
+    
 
         
     
