@@ -188,4 +188,3 @@ class UserInput():
             self.clicked = True
         else:
             self.clicked = False
-            

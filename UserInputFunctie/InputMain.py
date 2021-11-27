@@ -12,7 +12,7 @@ user_buttons = UserButtons(user_list, user_input)
 user_cursor = UserCursor('images/cursor.png')
 
 #Laadt alles in wat getoond moet worden.
-def display():
+def data():
     #Componenten van de functie tonen.
     user_list.display()
     user_input.display()

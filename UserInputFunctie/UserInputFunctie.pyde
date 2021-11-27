@@ -24,14 +24,10 @@ def draw():
     textFont(createFont('Arial', 50))
     
     #Toont het gehele scherm van de UserInput.
-    InputMain.display()
+    InputMain.data()
     
 def mousePressed():
     InputMain.mousePressed()
     
 def keyPressed():
     InputMain.keyPressed()
-    
-
-        
-    

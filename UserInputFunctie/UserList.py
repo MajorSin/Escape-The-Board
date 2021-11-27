@@ -47,5 +47,3 @@ class UserList():
     #Maakt de lijst met gebruikers leeg.
     def reset_list(self):
         self.users = []
-    
-                
