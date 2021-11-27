@@ -1,4 +1,4 @@
-import InputMain
+import Main
 
 #Spel gereed stellen.
 def setup():
@@ -22,10 +22,10 @@ def draw():
     textFont(createFont('Arial', 50))
     
     #Toont het gehele scherm van de UserInput.
-    InputMain.data()
+    Main.data()
     
 def mousePressed():
-    InputMain.mousePressed()
+    Main.mousePressed()
     
 def keyPressed():
-    InputMain.keyPressed()
+    Main.keyPressed()
