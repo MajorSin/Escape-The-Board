@@ -7,13 +7,17 @@ class UserButtons():
         self.user_list = user_list
         self.user_input = user_input
     
-    #Laadt alles in wat getoond moet worden.
-    def display(self):
+    def prep(self):
         #Laadt de afbeeldingen in.
+        global edit_image
+        global delete_image
+        global reset_image
         edit_image = loadImage('images/edit.png')
         delete_image = loadImage('images/delete.png')
         reset_image = loadImage('images/reset.png')
         
+    #Laadt alles in wat getoond moet worden.
+    def display(self):
         #Status van aanpassen en verwijderen.
         editing = self.user_input.editing
         deleting = self.user_input.deleting

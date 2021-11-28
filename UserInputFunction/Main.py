@@ -9,8 +9,13 @@ from User import *
 user_list = UserList([])
 user_input = UserInput('', user_list, User)
 user_buttons = UserButtons(user_list, user_input)
-user_cursor = UserCursor('images/cursor.png')
+user_cursor = UserCursor()
 
+#Gereed stellen wat nodig is.
+def prep():
+    user_buttons.prep()
+    user_cursor.prep()
+    
 #Laadt alles in wat getoond moet worden.
 def data():
     #Componenten van de functie tonen.

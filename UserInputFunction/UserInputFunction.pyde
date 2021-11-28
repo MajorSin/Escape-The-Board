@@ -12,6 +12,9 @@ def setup():
     #Achtergrond inladen.
     global background_image
     background_image = loadImage('images/horror-background.jpg')
+    
+    #Gereed stellen wat nodig is in Main.
+    Main.prep()
 
 #Ververst elke keer wat getekent wordt.
 def draw():
