@@ -31,8 +31,5 @@ def draw():
     #Toont het gehele scherm van de Category.
     Main.data()
     
-# def mousePressed():
-#     Main.mousePressed()
-    
-# def keyPressed():
-#     Main.keyPressed()
+def mousePressed():
+    Main.mousePressed()

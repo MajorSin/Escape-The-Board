@@ -1,3 +1,5 @@
+import Router
+
 class CategoryButtons():
     standard = 30
     knowledge = 30
@@ -77,19 +79,18 @@ class CategoryButtons():
             self.knowledge = 100 
             self.math = 100
     
-    # def mousePressed(self):
-    #     #Locatie op de x en y van de knoppen.
-    #     edit_l = 198 <= mouseX <= 348
-    #     delete_l = 428 <= mouseX <= 578
-    #     reset_l = 650 <= mouseX <= 800
+    def mousePressed(self):
+        #Locatie op de x en y van de knoppen.
+        standard_l = (250 <= mouseX <= 750) and (400 <= mouseY <= 520)
+        knowledge_l = (250 <= mouseX <= 750) and (570 <= mouseY <= 690)
+        math_l = (250 <= mouseX <= 750) and (740 <= mouseY <= 860)
         
-    #     #Zorgt dat functies worden uitgevoert als een knop is geklikt.
-    #     if (edit_l or delete_l or reset_l) and 800 <= mouseY <= 900:
-    #         if edit_l and not(self.user_input.deleting):
-    #             if self.user_list.users:
-    #                 self.user_input.enable_editing()
-    #         elif delete_l and not(self.user_input.editing):
-    #             if self.user_list.users:
-    #                 self.user_input.enable_deleting()
-    #         elif reset_l and not(self.user_input.deleting or self.user_input.editing):
-    #             self.user_list.reset_list()
+        #Zorgt dat functies worden uitgevoert als een knop is geklikt.
+        if (standard_l or knowledge_l or math_l):
+            if standard_l:
+                Router.set_screen('Standard')
+            elif knowledge_l:
+                Router.set_screen('Knowledge')
+            else:
+                Router.set_screen('Math')
+            
