@@ -44,3 +44,5 @@ def set_screen(chosen_category):
 def mousePressed():
     category_buttons.mousePressed()
     category.mousePressed()
+    
+    
