@@ -28,7 +28,7 @@ def draw():
     #Standaard font tekst.
     textFont(font)
     
-    #Toont het gehele scherm van de Category.
+    #Toont het gehele scherm van de Category
     Main.data()
     
 def mousePressed():
