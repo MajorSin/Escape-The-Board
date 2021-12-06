@@ -4,11 +4,12 @@ import json
 
 class post():
     def set(self):
-        background(0, 200, 0)
-        True
+        bgImg = loadImage("img/achtergrond.jpg")
+        background(bgImg)
     
     def display(self, vraag, antwoord, category):
-        background(0, 200, 0)
+        bgImg = loadImage("img/achtergrond.jpg")
+        background(bgImg)
         fill(0, 102, 153)
         rect(25,25,200,80)
         textSize(32)

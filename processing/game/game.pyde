@@ -19,8 +19,10 @@ def input(message=''):
     return JOptionPane.showInputDialog(frame, message)
 
 def setup():
-    size(1080,900)
-    background(0, 200, 0)
+    global bgImg
+    size(1280,720)
+    bgImg = loadImage("img/achtergrond.jpg")
+    background(bgImg)
 
 def draw():
     #AANVRAAG VRAGEN
@@ -36,7 +38,7 @@ def draw():
         True
     #ERROR SCREEN INPUT
     elif errorScreenInput:
-        background(0, 200, 0)
+        background(bgImg)
         fill(0, 102, 153)
         rect(25,25,230,80)
         textSize(32)
@@ -46,24 +48,30 @@ def draw():
         text("ERROR",400,175)
     else:
         #BASISSCHERM
+        noStroke()
         textSize(32)
-        background(0, 200, 0)
+        background(bgImg)
         #ALLE VRAGEN OPHALEN
-        fill(0, 102, 153)
-        rect(300,100,450,100)
-        fill(100, 0, 53)
-        text("Laat alle vragen zien",400,155)
-        #VRAGEN INZIEN
-        fill(0, 102, 153)
-        rect(300,250,450,100)
-        fill(100, 0, 53)
-        text("Vraag invoegen",400,305)
+        fill("#2D42AB")
+        rect(156.5,180,967,114.15)
+        fill(255, 255, 255)
+        text("TOEGEVOEGDE VRAGEN ZIEN",440,250)
+        #VRAGEN TOEVOEGEN
+        fill("#123900")
+        rect(156.5,330,967,114.15)
+        fill(255, 255, 255)
+        text("VRAAG TOEVOEGEN",490,400)
         #ALLES RESETTEN
-        fill(0, 102, 153)
-        rect(300,400,450,100)
-        fill(100, 0, 53)
-        text("Vragen resetten",400,455)
-        text("Kies een optie:",400,50)
+        fill("#640700")
+        rect(156.5,480,967,114.15)
+        fill(255, 255, 255)
+        text("TOEGEVOEGDE VRAGEN VERWIJDEREN",400,545)
+        #HEADER
+        header = loadImage("img/header.png")
+        image(header, 265, 10, 750, 130)
+        #GA TERUG
+        fill("#978787")
+        rect(20, 10, 200, 130, 28)
         
 def mousePressed():
     global buttonPressedGetVragen
@@ -76,11 +84,11 @@ def mousePressed():
     global category
     global errorScreenInput
     #BUTTON VOOR RUNNEN
-    if 300 < mouseX < 300 + 450 and 100 < mouseY < 100 + 100 and buttonPressedGetVragen == False and buttonPressedVraagInvoegen == False and buttonPressedResetten1 == False:
+    if 156.5 < mouseX < 156.5 + 967 and 180 < mouseY < 180 + 114.15 and buttonPressedGetVragen == False and buttonPressedVraagInvoegen == False and buttonPressedResetten1 == False:
         buttonPressedGetVragen = True
         get.display()
     #BUTTON VOOR INVOEGEN
-    elif 300 < mouseX < 300 + 450 and 250 < mouseY < 250 + 100 and buttonPressedGetVragen == False and buttonPressedVraagInvoegen == False and buttonPressedResetten1 == False:
+    elif 156.5 < mouseX < 156.5 + 967 and 330 < mouseY < 330 + 114.15 and buttonPressedGetVragen == False and buttonPressedVraagInvoegen == False and buttonPressedResetten1 == False:
         #WELKE VRAAG TOEVOEGEN
         vraag = input('Welk vraag wilt u invoegen (kan niet leeg)?')
         #VRAAG LEGE INPUT
@@ -117,11 +125,11 @@ def mousePressed():
         else:
             buttonPressedVraagInvoegen = False
     #BUTTON VOOR RESETTEN VRAGEN
-    elif 300 < mouseX < 300 + 450 and 400 < mouseY < 400 + 100 and buttonPressedGetVragen == False and buttonPressedVraagInvoegen == False and buttonPressedResetten1 == False:
+    elif 156.5 < mouseX < 156.5 + 967 and 480 < mouseY < 480 + 114.15 and buttonPressedGetVragen == False and buttonPressedVraagInvoegen == False and buttonPressedResetten1 == False:
         buttonPressedResetten1 = True
         reset.display(buttonPressedResetten2)
     #BUTTON VOOR BEVESTIGING RESETTEN VRAAG
-    elif 300 < mouseX < 300 + 450 and 205 < mouseY < 205 + 100 and buttonPressedGetVragen == False and buttonPressedVraagInvoegen == False and buttonPressedResetten1 == True:
+    elif 415 < mouseX < 415 + 450 and 205 < mouseY < 205 + 100 and buttonPressedGetVragen == False and buttonPressedVraagInvoegen == False and buttonPressedResetten1 == True:
         buttonPressedResetten2 = True
         reset.reset2()
     #GA TERUG

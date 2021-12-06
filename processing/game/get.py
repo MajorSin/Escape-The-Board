@@ -5,10 +5,12 @@ import json
 
 class get():
     def set(self):
-        background(0, 200, 0)
+        bgImg = loadImage("img/achtergrond.jpg")
+        background(bgImg)
         
     def display(self):
-        background(0, 200, 0)
+        bgImg = loadImage("img/achtergrond.jpg")
+        background(bgImg)
         fill(0, 102, 153)
         #GA TERUG
         rect(25,25,200,80)

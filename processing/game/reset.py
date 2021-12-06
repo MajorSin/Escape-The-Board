@@ -3,11 +3,13 @@ import json
 class reset():
     global toevoeging
     def set(self):
-        background(0, 200, 0)
+        bgImg = loadImage("img/achtergrond.jpg")
+        background(bgImg)
     
     def display(self, buttonPressedResetten2):
         global toevoeging
-        background(0, 200, 0)
+        bgImg = loadImage("img/achtergrond.jpg")
+        background(bgImg)
         fill(0, 102, 153)
         rect(25,25,200,80)
         textSize(32)
@@ -22,27 +24,30 @@ class reset():
             if main['toevoeging'] == 'True':
                 toevoeging = True
         if toevoeging != True:
+            fill(250, 250, 250)
             text("Er zijn geen toegevoegde vragen",400,165)
         #NIET LEEG
         else:
             #BEVESTIGING
-            fill(0, 102, 153)
-            rect(300,205,450,100)
-            fill(100, 0, 53)
-            text("Weet u het zeker?",400,165)
-            text("Ja",505,260)
+            fill("#640700")
+            rect(415,205,450,100)
+            fill(250, 250, 250)
+            text("Weet u het zeker?",515,165)
+            text("Ja",630,260)
     
     def reset2(self):
         if toevoeging == True:
             self.delete()
-            background(0, 200, 0)
+            bgImg = loadImage("img/achtergrond.jpg")
+            background(bgImg)
             fill(0, 102, 153)
             rect(25,25,200,80)
             textSize(32)
             fill(100, 0, 53)
             text("Ga Terug",55,75)
             #KNOP BEVESTIGING
-            text("Vragen gereset naar originele staat!",250,205)
+            fill(250, 250, 250)
+            text("Vragen gereset naar originele staat!",375,180)
         
     def delete(self):
         if toevoeging == True:
