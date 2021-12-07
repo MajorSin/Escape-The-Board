@@ -1,5 +1,5 @@
 import json
-
+# AANPASSINGEN: FONT, GA TERUG KNOP, MARGIN BIJ VRAGEN ZIEN EN INVOEGEN EN VRAAG INVOEGEN KOPPELEN AAN JSON
 from get import *
 from post import *
 from reset import *
@@ -32,7 +32,7 @@ def draw():
     #BUTTON OM INVOEGEN
     elif buttonPressedVraagInvoegen:
         #post.set()
-        post.display(vraag, antwoord, category)
+        post.display(vraag, antwoord, category, graad)
     #RESETTEN VRAGEN
     elif buttonPressedResetten1:
         True
@@ -83,6 +83,7 @@ def mousePressed():
     global antwoord
     global category
     global errorScreenInput
+    global graad
     #BUTTON VOOR RUNNEN
     if 156.5 < mouseX < 156.5 + 967 and 180 < mouseY < 180 + 114.15 and buttonPressedGetVragen == False and buttonPressedVraagInvoegen == False and buttonPressedResetten1 == False:
         buttonPressedGetVragen = True
@@ -92,7 +93,7 @@ def mousePressed():
         #WELKE VRAAG TOEVOEGEN
         vraag = input('Welk vraag wilt u invoegen (kan niet leeg)?')
         #VRAAG LEGE INPUT
-        if vraag == "" or vraag == " ":
+        if vraag == "" or vraag == "  ":
             errorScreenInput = True
         #VRAAG VOLLEDIG
         elif vraag:
@@ -113,8 +114,20 @@ def mousePressed():
                     errorScreenInput = True
                 #CATEGORIE VOLLEDIG
                 elif category == 'kennis' or category == "wiskunde":
-                    post.append(vraag, antwoord, category)
-                    buttonPressedVraagInvoegen = True
+                    graad = input('Welk moeilijkheidsgraad? (moeilijk of makkelijk)?').lower()
+                    #VRAAG LEGE INPUT
+                    if graad == "" or graad == " ":
+                        errorScreenInput = True
+                    #NIET GOED GEKOZEN
+                    elif graad != 'moeilijk'and graad != "makkelijk":
+                        errorScreenInput = True
+                    #GRAAD VOLLEDIG
+                    elif graad == 'moeilijk' or graad == "makkelijk":
+                        post.append(vraag, antwoord, category, graad)
+                        buttonPressedVraagInvoegen = True
+                    #ANNULERING = TERUGBRENGEN
+                    else:
+                        buttonPressedVraagInvoegen = False
                 #ANNULERING = TERUGBRENGEN
                 else:
                     buttonPressedVraagInvoegen = False

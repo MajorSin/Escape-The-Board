@@ -24,9 +24,10 @@ class get():
         textSize(20)
         height = 150
         questions = 1
+        fill(250, 250, 250)
         for i in range(len(list)):
             main = list[i]
-            if main['toevoeging'] == 'True':
+            if main['toevoeging'] == 'True' and main['type'] == "open vraag":
                 text("VRAAG " + str(questions) + '\n', 80, height)
                 height += 50
                 text("Vraag is: " + main['question'], 80, height)
