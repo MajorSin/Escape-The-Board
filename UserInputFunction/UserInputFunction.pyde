@@ -3,7 +3,7 @@ import Main
 #Spel gereed stellen.
 def setup():
     #Grootte van het spel.
-    size(1000, 1000)
+    size(1280, 720)
     
     #Stijl.
     noStroke()
@@ -12,6 +12,10 @@ def setup():
     #Achtergrond inladen.
     global background_image
     background_image = loadImage('images/horror-background.jpg')
+    
+    #Standaard font inladen.
+    global font
+    font = createFont('Arial', 50)
     
     #Gereed stellen wat nodig is in Main.
     Main.prep()
@@ -22,7 +26,7 @@ def draw():
     background(background_image)
     
     #Standaard font tekst.
-    textFont(createFont('Arial', 50))
+    textFont(font)
     
     #Toont het gehele scherm van de UserInput.
     Main.data()

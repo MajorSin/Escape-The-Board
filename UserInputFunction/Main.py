@@ -13,6 +13,7 @@ user_cursor = UserCursor()
 
 #Gereed stellen wat nodig is.
 def prep():
+    user_input.prep()
     user_buttons.prep()
     user_cursor.prep()
     

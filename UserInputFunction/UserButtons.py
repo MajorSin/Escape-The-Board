@@ -2,6 +2,8 @@ class UserButtons():
     edit = 100
     delete = 100
     reset = 100
+    hovered_return = False
+    hovered_continue = False
     
     def __init__(self, user_list, user_input):
         self.user_list = user_list
@@ -12,12 +14,66 @@ class UserButtons():
         global edit_image
         global delete_image
         global reset_image
+        
         edit_image = loadImage('images/edit.png')
         delete_image = loadImage('images/delete.png')
         reset_image = loadImage('images/reset.png')
         
+        global font
+        font = createFont('Arial', 70)
+        
+        global title_background
+        title_background = loadImage("images/title-background.png")
+        
+        global title_font
+        title_font = createFont("fonts/forresta.otf", 130)
+        
+        global buttons_font
+        buttons_font = createFont("fonts/american-captain.otf", 80)
+        
+        global return_image
+        return_image = loadImage("images/left-arrow.png")
+        return_image.resize(110, 128)
+        
+        global return_image_hovered
+        return_image_hovered = loadImage("images/left-arrow-hovered.png")
+        return_image_hovered.resize(110, 128)
+        
     #Laadt alles in wat getoond moet worden.
     def display(self):
+        #Titel achtergrond.
+        image(title_background, 300, 60, 680, 120)
+        
+        #Toegepaste titel font.
+        fill('#b9b8b6')
+        textFont(title_font);
+        text('Maak speler', 370, 150)
+        
+        fill(100)
+        stroke(100)
+        rect(40, 40, 150, 120, 15)
+        
+        #Hover van de terug knop.
+        if self.hovered_return:
+            image(return_image_hovered, 60, 40)
+        else:
+            image(return_image, 60, 40)
+        
+        #Knop om verder te gaan.
+        if (len(self.user_list.users) >= 2) and not(self.user_input.deleting or self.user_input.editing):
+            fill(100)
+            stroke(100)
+            rect(1030, 600, 200, 80)
+            
+            if self.hovered_continue:
+                fill('#00f1fe')
+            else:
+                fill(255)
+                
+            textFont(buttons_font);
+            textSize(60)
+            text('Verder', 1057, 663)
+        
         #Status van aanpassen en verwijderen.
         editing = self.user_input.editing
         deleting = self.user_input.deleting
@@ -26,20 +82,20 @@ class UserButtons():
         if (editing and not(deleting)) or not(editing) and not(deleting):
             fill(self.edit)
             stroke(self.edit)
-            rect(198, 800, 150, 100)
-            image(edit_image, 245, 820)
+            rect(118, 520, 150, 100)
+            image(edit_image, 165, 540)
       
         if (deleting and not(editing)) or not(deleting) and not(editing):  
             fill(self.delete)
             stroke(self.delete)
-            rect(427, 800, 150, 100)
-            image(delete_image, 469, 820)
+            rect(345, 520, 150, 100)
+            image(delete_image, 392, 540)
         
         if not(deleting) and not(editing):
             fill(self.reset)
             stroke(self.reset)
-            rect(650, 800, 150, 100)
-            image(reset_image, 694, 820)
+            rect(570, 520, 150, 100)
+            image(reset_image, 616, 540)
             
         #Houdt bij wat gecheckt moet worden.
         UserButtons.check(self)
@@ -51,12 +107,12 @@ class UserButtons():
     #Houdt bij of er met de muis is bewogen over locaties.
     def mouse_over(self):
         #Locatie op de x en y van de knoppen.
-        edit_l = 198 <= mouseX <= 348
-        delete_l = 428 <= mouseX <= 578
-        reset_l = 650 <= mouseX <= 800
+        edit_l = 118 <= mouseX <= 268
+        delete_l = 345 <= mouseX <= 495
+        reset_l = 570 <= mouseX <= 720
         
         #Wijzigt de kleur van de knoppen op basis van locatie.
-        if (edit_l or delete_l or reset_l) and 800 <= mouseY <= 900:
+        if (edit_l or delete_l or reset_l) and (520 <= mouseY <= 620):
             if edit_l:
                 self.edit = '#2d42ab'
             elif delete_l:
@@ -68,14 +124,24 @@ class UserButtons():
             self.delete = 100 
             self.reset = 100
     
+        if (40 <= mouseX <= 190) and (40 <= mouseY <= 160):
+            self.hovered_return = True
+        else:
+            self.hovered_return = False
+            
+        if (1030 <= mouseX <= 1230) and (600 <= mouseY <= 680):
+            self.hovered_continue = True
+        else:
+            self.hovered_continue = False
+        
     def mousePressed(self):
         #Locatie op de x en y van de knoppen.
-        edit_l = 198 <= mouseX <= 348
-        delete_l = 428 <= mouseX <= 578
-        reset_l = 650 <= mouseX <= 800
+        edit_l = 118 <= mouseX <= 268
+        delete_l = 345 <= mouseX <= 495
+        reset_l = 570 <= mouseX <= 720
         
         #Zorgt dat functies worden uitgevoert als een knop is geklikt.
-        if (edit_l or delete_l or reset_l) and 800 <= mouseY <= 900:
+        if (edit_l or delete_l or reset_l) and (520 <= mouseY <= 620):
             if edit_l and not(self.user_input.deleting):
                 if self.user_list.users:
                     self.user_input.enable_editing()
