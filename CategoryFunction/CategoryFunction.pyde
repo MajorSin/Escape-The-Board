@@ -3,7 +3,7 @@ import Main
 #Spel gereed stellen.
 def setup():
     #Grootte van het spel.
-    size(1000, 1000)
+    size(1280, 720)
     
     #Stijl.
     noStroke()
