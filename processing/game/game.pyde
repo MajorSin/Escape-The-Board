@@ -21,15 +21,15 @@ def input(message=''):
 def setup():
     #BACKGROUND
     global bgImg
-    global bungee32
+    global evil32
     size(1280,720)
     bgImg = loadImage("img/achtergrond.jpg")
     background(bgImg)
     #FONT
-    bungee32 = createFont("data/Bungee-Regular.ttf", 32)
+    evil32 = createFont("data/Evil_Empire.otf", 32)
 
 def draw():
-    textFont(bungee32)
+    textFont(evil32)
     #AANVRAAG VRAGEN
     if buttonPressedGetVragen:
         #get.set()
@@ -60,23 +60,23 @@ def draw():
     else:
         #BASISSCHERM
         noStroke()
-        textSize(32)
+        textSize(50)
         background(bgImg)
         #ALLE VRAGEN OPHALEN
         fill("#2D42AB")
         rect(156.5,180,967,114.15)
         fill(255, 255, 255)
-        text("TOEGEVOEGDE VRAGEN ZIEN",399,250)
+        text("TOEGEVOEGDE VRAGEN ZIEN",399,255)
         #VRAGEN TOEVOEGEN
         fill("#123900")
         rect(156.5,330,967,114.15)
         fill(255, 255, 255)
-        text("VRAAG TOEVOEGEN",477,400)
+        text("VRAAG TOEVOEGEN",477,405)
         #ALLES RESETTEN
         fill("#640700")
         rect(156.5,480,967,114.15)
         fill(255, 255, 255)
-        text("TOEGEVOEGDE VRAGEN VERWIJDEREN",307,545)
+        text("TOEGEVOEGDE VRAGEN VERWIJDEREN",307,550)
         #HEADER
         header = loadImage("img/header.png")
         image(header, 265, 10, 750, 130)

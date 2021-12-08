@@ -19,11 +19,11 @@ class post():
         text("Ga Terug",52,85)
         #INGEVOEGD
         fill(250, 250, 250)
-        text("Uw vraag was: " + vraag,60,185)
-        text("Het antwoord is: " + antwoord,60,230)
-        text("Bij de categorie: " + category,60,270)
-        text("Met de moeilijkheidsgraad: " + graad,60,310)
-        text("Uw vraag is toegevoegd!",60,360)
+        text("Uw vraag was: " + vraag,25,185)
+        text("Het antwoord is: " + antwoord,25,230)
+        text("Bij de categorie: " + category,25,270)
+        text("Met de moeilijkheidsgraad: " + graad,25,310)
+        text("Uw vraag is toegevoegd!",25,360)
         
     def append(self, vraag, antwoord, category, graad):
         #APPEND

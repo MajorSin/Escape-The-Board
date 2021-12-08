@@ -26,7 +26,7 @@ class get():
         #PRINT RESULT
         height = 180
         questions = 1
-        heightQuestion = 250
+        heightQuestion = 240
         fill(250, 250, 250)
         for i in range(len(list)):
             main = list[i]
@@ -36,14 +36,14 @@ class get():
                 text(questions, 20, heightQuestion)
                 textSize(19)
                 text("Vraag is: " + main['question'], 80, height)
-                height += 45
+                height += 35
                 text("Antwoord is: " + main['answer'], 80, height)
-                height += 45
+                height += 35
                 text("Uit de categorie: " + main['category'], 80, height)
-                height += 45
+                height += 35
                 text("Met de moeilijkheidsgraad: " + main['level'], 80, height)
-                height += 45
+                height += 35
                 text("-----------------------", 80, height)
-                height += 50
-                heightQuestion += 240
+                height += 45
+                heightQuestion += 190
                 questions += 1
