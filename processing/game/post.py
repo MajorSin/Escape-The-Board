@@ -10,18 +10,20 @@ class post():
     def display(self, vraag, antwoord, category, graad):
         bgImg = loadImage("img/achtergrond.jpg")
         background(bgImg)
-        fill(0, 102, 153)
-        rect(25,25,200,80)
+        #GA TERUG
+        textFont(createFont("Segoe UI Bold", 32))
+        fill("#978787")
+        rect(20, 10, 200, 130, 28)
         textSize(32)
         fill(100, 0, 53)
-        text("Ga Terug",55,75)
+        text("Ga Terug",52,85)
         #INGEVOEGD
         fill(250, 250, 250)
-        text("Uw vraag was: " + vraag,400,175)
-        text("Het antwoord is: " + antwoord,400,220)
-        text("Bij de categorie: " + category,400,260)
-        text("Met de moeilijkheidsgraad: " + graad,400,300)
-        text("Uw vraag is toegevoegd!",400,340)
+        text("Uw vraag was: " + vraag,60,185)
+        text("Het antwoord is: " + antwoord,60,230)
+        text("Bij de categorie: " + category,60,270)
+        text("Met de moeilijkheidsgraad: " + graad,60,310)
+        text("Uw vraag is toegevoegd!",60,360)
         
     def append(self, vraag, antwoord, category, graad):
         #APPEND

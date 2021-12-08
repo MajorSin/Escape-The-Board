@@ -1,5 +1,5 @@
 import json
-# AANPASSINGEN: FONT, GA TERUG KNOP, MARGIN BIJ VRAGEN ZIEN EN INVOEGEN EN VRAAG INVOEGEN KOPPELEN AAN JSON
+# AANPASSINGEN: GA TERUG KNOP
 from get import *
 from post import *
 from reset import *
@@ -19,12 +19,17 @@ def input(message=''):
     return JOptionPane.showInputDialog(frame, message)
 
 def setup():
+    #BACKGROUND
     global bgImg
+    global bungee32
     size(1280,720)
     bgImg = loadImage("img/achtergrond.jpg")
     background(bgImg)
+    #FONT
+    bungee32 = createFont("data/Bungee-Regular.ttf", 32)
 
 def draw():
+    textFont(bungee32)
     #AANVRAAG VRAGEN
     if buttonPressedGetVragen:
         #get.set()
@@ -35,17 +40,23 @@ def draw():
         post.display(vraag, antwoord, category, graad)
     #RESETTEN VRAGEN
     elif buttonPressedResetten1:
-        True
+        pass
     #ERROR SCREEN INPUT
     elif errorScreenInput:
         background(bgImg)
-        fill(0, 102, 153)
-        rect(25,25,230,80)
+        #GA TERUG
+        textFont(createFont("Segoe UI Bold", 32))
+        fill("#978787")
+        rect(20, 10, 200, 130, 28)
         textSize(32)
         fill(100, 0, 53)
-        text("Ga Terug",55,75)
+        text("Ga Terug",52,85)
         #ERROR TEXT
-        text("ERROR",400,175)
+        textSize(40)
+        fill(255, 255, 255)
+        text("ERROR",570,80)
+        textSize(18)
+        text("Input is leeg of u heeft ergens een typefout gemaakt",410,120)
     else:
         #BASISSCHERM
         noStroke()
@@ -55,23 +66,27 @@ def draw():
         fill("#2D42AB")
         rect(156.5,180,967,114.15)
         fill(255, 255, 255)
-        text("TOEGEVOEGDE VRAGEN ZIEN",440,250)
+        text("TOEGEVOEGDE VRAGEN ZIEN",399,250)
         #VRAGEN TOEVOEGEN
         fill("#123900")
         rect(156.5,330,967,114.15)
         fill(255, 255, 255)
-        text("VRAAG TOEVOEGEN",490,400)
+        text("VRAAG TOEVOEGEN",477,400)
         #ALLES RESETTEN
         fill("#640700")
         rect(156.5,480,967,114.15)
         fill(255, 255, 255)
-        text("TOEGEVOEGDE VRAGEN VERWIJDEREN",400,545)
+        text("TOEGEVOEGDE VRAGEN VERWIJDEREN",307,545)
         #HEADER
         header = loadImage("img/header.png")
         image(header, 265, 10, 750, 130)
         #GA TERUG
+        textFont(createFont("Segoe UI Bold", 32))
         fill("#978787")
         rect(20, 10, 200, 130, 28)
+        textSize(32)
+        fill(100, 0, 53)
+        text("Ga Terug",52,85)
         
 def mousePressed():
     global buttonPressedGetVragen
@@ -93,7 +108,7 @@ def mousePressed():
         #WELKE VRAAG TOEVOEGEN
         vraag = input('Welk vraag wilt u invoegen (kan niet leeg)?')
         #VRAAG LEGE INPUT
-        if vraag == "" or vraag == "  ":
+        if vraag == "" or vraag == " ":
             errorScreenInput = True
         #VRAAG VOLLEDIG
         elif vraag:
@@ -146,7 +161,7 @@ def mousePressed():
         buttonPressedResetten2 = True
         reset.reset2()
     #GA TERUG
-    if 25 < mouseX < 25 + 200 and 25 < mouseY < 25 + 200:
+    if 20 < mouseX < 20 + 200 and 10 < mouseY < 10 + 130:
         buttonPressedGetVragen = False
         buttonPressedVraagInvoegen = False
         errorScreenInput = False

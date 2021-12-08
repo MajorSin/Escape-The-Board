@@ -10,11 +10,13 @@ class reset():
         global toevoeging
         bgImg = loadImage("img/achtergrond.jpg")
         background(bgImg)
-        fill(0, 102, 153)
-        rect(25,25,200,80)
+        #GA TERUG
+        textFont(createFont("Segoe UI Bold", 32))
+        fill("#978787")
+        rect(20, 10, 200, 130, 28)
         textSize(32)
         fill(100, 0, 53)
-        text("Ga Terug",55,75)
+        text("Ga Terug",52,85)
         #LEEG
         json_file = open('questions.json')
         list = json.loads(json_file.read())
@@ -33,19 +35,22 @@ class reset():
             rect(415,205,450,100)
             fill(250, 250, 250)
             text("Weet u het zeker?",515,165)
-            text("Ja",630,260)
+            text("Ja",630,262)
     
     def reset2(self):
         if toevoeging == True:
             self.delete()
             bgImg = loadImage("img/achtergrond.jpg")
             background(bgImg)
-            fill(0, 102, 153)
-            rect(25,25,200,80)
+            #GA TERUG
+            textFont(createFont("Segoe UI Bold", 32))
+            fill("#978787")
+            rect(20, 10, 200, 130, 28)
             textSize(32)
             fill(100, 0, 53)
-            text("Ga Terug",55,75)
+            text("Ga Terug",52,85)
             #KNOP BEVESTIGING
+            textSize(30)
             fill(250, 250, 250)
             text("Vragen gereset naar originele staat!",375,180)
         
