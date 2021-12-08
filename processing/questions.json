@@ -104,7 +104,7 @@
       "toevoeging": "False"
   },  
   {   
-      "question": "Hoeveel seconden zit er in één uur?",
+      "question": "Hoeveel seconden zit er in een uur?",
       "answer": "3600 seconden",
       "type": "open vraag",
       "category": "wiskunde",
@@ -273,7 +273,7 @@
   },  
   {   
       "question": "Wat is het kleinste werelddeel?",
-      "answer": "Australië",
+      "answer": "Australie",
       "type": "open vraag",
       "category": "kennis",
       "level": "makkelijk",
@@ -288,7 +288,7 @@
       "toevoeging": "False"
   },  
   {   
-      "question": "Hoeveel provinciën heeft Nederland?",
+      "question": "Hoeveel provincien heeft Nederland?",
       "answer": 12,
       "type": "open vraag",
       "category": "kennis",
@@ -676,7 +676,7 @@
   },  
   {   
       "question": "Wat is de hoofdstad van Hongarije?",
-      "A": "Kaposvár",
+      "A": "Kaposvar",
       "B": "Boedapest",
       "C": "Debrecen",
       "answer": "B",
@@ -743,7 +743,7 @@
   {   
       "question": "Wat is het Italiaanse woord voor meester of leraar?",
       "A": "Maestro",
-      "B": "Maître",
+      "B": "Maitre",
       "C": "Meister",
       "answer": "A",
       "type": "mtp",
@@ -832,7 +832,7 @@
       "question": "Wat is het enige continent op aarde zonder woestijnen?",
       "A": "Noord-Amerika",
       "B": "Europa",
-      "C": "Azië",
+      "C": "Azie",
       "answer": "B",
       "type": "mtp",
       "category": "kennis",

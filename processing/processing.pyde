@@ -1,63 +1,79 @@
 #IMPORT FILES
-from moeilijk import *
-from makkelijk import *
+from vraag import *
 
 #IMPORT CLAS
-moeilijk = moeilijk()
-makkelijk = makkelijk()
+vraag = vraag()
 
 #STANDARD VARIABLES
-moeilijkButton = False
-makkelijkButton = False
+vraagButton = False
 
 def setup():
-    size(1080,900)
-    background(0, 200, 0)
+    global bgImg
+    global evil32
+    global logo
+    size(1280,720)
+    bgImg = loadImage("img/achtergrond.jpg")
+    background(bgImg)
+    noStroke()
+    evil32 = createFont("data/Evil_Empire.otf", 32)
+    logo = loadImage("img/Skelet.png")
     
 def draw():
-    #MOEILIJKE KNOP
-    if moeilijkButton:
-        pass
-    #MAKKELIJK KNOP
-    elif makkelijkButton:
+    #VRAAG KNOP
+    if vraagButton:
         pass
     #BASISSCHERM
     else:
-        background(0, 200, 0)
+        #SETUP
+        global category
+        noStroke()
+        background(bgImg)
+        category = "wiskunde"
+        if category == "standaard":
+            headercolor = "#2D42AB"
+        elif category == "kennis":
+            headercolor = "#640700"
+        elif category == "wiskunde":
+            headercolor = "#123900"
+        #HEADER
+        textFont(evil32)
+        textSize(65)
+        fill(headercolor)
+        rect(0, 0, 754, 150)
+        fill(250, 250, 250)
+        text(category, 400, 95)
+        #GA TERUG
+        textFont(createFont("Segoe UI Bold", 32))
+        fill("#978787")
+        rect(20, 10, 200, 130, 28)
         textSize(32)
         fill(100, 0, 53)
-        text("Kies een optie:", 400, 50)
-        #MOEILIJK KNOP
-        fill(0, 102, 153)
-        rect(300,100,450,100)
-        fill(100, 0, 53)
-        text("Moeilijke vraag",400,155)
+        text("Ga Terug",52,85)
         #MAKKELIJK KNOP
-        fill(0, 102, 153)
-        rect(300,250,450,100)
-        fill(100, 0, 53)
-        text("Makkelijke vraag",400,305)
+        fill(0, 0, 0)
+        rect(81,190,592,322)
+        fill(250, 250, 250)
+        textFont(evil32)
+        textSize(50)
+        text("Pik een vraag",244,475)
+        image(logo, 290, 220, 180, 197)
+        #OBSTAKEL KNOP
+        fill(0, 0, 0)
+        rect(81,540,592,140)
+        fill(250, 250, 250)
+        text("Obstakel",310,605)
+        text("melden",325,650)
+        image(logo, 202, 560, 85, 97)
     
 def mousePressed():
-    global moeilijkButton
-    global makkelijkButton
-    #MOEILIJKE VRAAG BUTTONS
-    if 300 < mouseX < 300 + 450 and 100 < mouseY < 100 + 100 and moeilijkButton == False and makkelijkButton == False:
-        moeilijkButton = True
-        moeilijk.display(moeilijkButton)
+    global vraagButton
     #MAKKELIJKE VRAAG BUTTONS
-    elif 300 < mouseX < 300 + 450 and 250 < mouseY < 250 + 100 and moeilijkButton == False and makkelijkButton == False:
-        makkelijkButton = True
-        makkelijk.display(makkelijk)
-    #ANTWOORD MOEILIJKE VRAAG
-    elif 300 < mouseX < 300 + 475 and 210 < mouseY < 210 + 100 and moeilijkButton == True and makkelijkButton == False:
-        moeilijk.antwoord()
-    #ANTWOORD MAKKELIJKE VRAAG
-    elif 300 < mouseX < 300 + 475 and 210 < mouseY < 210 + 100 and moeilijkButton == False and makkelijkButton == True:
-        makkelijk.antwoord()
-        print("Antwoord makkelijke vraag BASIS SCHERM")
-    #GA TERUG
-    if 25 < mouseX < 25 + 200 and 25 < mouseY < 25 + 200:
-        moeilijkButton = False
-        makkelijkButton = False
-        
+    if 81 < mouseX < 81 + 592 and 190 < mouseY < 190 + 322 and vraagButton == False:
+        vraagButton = True
+        vraag.display(vraag, category)
+    #IN VRAAG.PY
+    elif vraagButton == True:
+        vraag.mousePressed(vraagButton)
+    #ANNULEER 
+    if 55 < mouseX < 55 + 150 and 45 < mouseY < 45 + 50 and vraagButton == True:
+        vraagButton = False
