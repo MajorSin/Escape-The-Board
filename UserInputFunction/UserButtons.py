@@ -29,7 +29,7 @@ class UserButtons():
         title_font = createFont("fonts/forresta.otf", 130)
         
         global buttons_font
-        buttons_font = createFont("fonts/american-captain.otf", 80)
+        buttons_font = createFont("fonts/evil-empire.otf", 80)
         
         global return_image
         return_image = loadImage("images/left-arrow.png")
@@ -45,7 +45,7 @@ class UserButtons():
         image(title_background, 300, 60, 680, 120)
         
         #Toegepaste titel font.
-        fill('#b9b8b6')
+        fill('#bcbcbc')
         textFont(title_font);
         text('Maak speler', 370, 150)
         
@@ -63,7 +63,7 @@ class UserButtons():
         if (len(self.user_list.users) >= 2) and not(self.user_input.deleting or self.user_input.editing):
             fill(100)
             stroke(100)
-            rect(1030, 600, 200, 80)
+            rect(1040, 610, 200, 80)
             
             if self.hovered_continue:
                 fill('#00f1fe')
@@ -72,7 +72,7 @@ class UserButtons():
                 
             textFont(buttons_font);
             textSize(60)
-            text('Verder', 1057, 663)
+            text('Verder', 1063, 670)
         
         #Status van aanpassen en verwijderen.
         editing = self.user_input.editing

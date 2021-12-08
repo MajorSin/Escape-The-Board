@@ -93,7 +93,7 @@ class UserInput():
             
     #Toont error met de layout van hieronder.
     def get_error(self, name, x, y):
-        fill('#771414')
+        fill('#b72222') #b72222 #771414
         textFont(error_font);
         text(name, x, y)
 
