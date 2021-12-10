@@ -118,7 +118,8 @@ class Category():
         
     def mousePressed(self):
         mouse_x = 110 <= mouseX <= 710
-    
+        
+        #Vraag scherm wordt hierdoor getoond.
         if mouse_x and (200 <= mouseY <= 470):
             Router.set_screen('Question')
             category = ''

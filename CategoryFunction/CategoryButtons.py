@@ -114,7 +114,6 @@ class CategoryButtons():
         math_l = mouse_x and (550 <= mouseY <= 660)
         
         #Zorgt dat functies worden uitgevoert als een knop is geklikt.
-        
         if (standard_l or knowledge_l or math_l) and Router.current_screen == 'Categories':
             if standard_l:
                 Router.set_screen('Standard')
