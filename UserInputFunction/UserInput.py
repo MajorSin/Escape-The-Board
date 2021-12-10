@@ -74,9 +74,9 @@ class UserInput():
         if not(self.deleting):
             if not(self.input) and (self.pressed_enter and self.clicked):
                 error = UserInput.get_error(self, 'Voer een naam in', 175, 300)
-            if len(self.user_list.users) == 4 and self.pressed_enter and not(characters):
+            if len(self.user_list.users) == 4 and self.pressed_enter and (not(characters) and not(self.editing)):
                 error = UserInput.get_error(self, 'Maximaal 4 spelers', 140, 300)
-            elif characters and (self.pressed_enter and self.input):
+            if characters and (self.pressed_enter and self.input):
                 if len(self.input) < 3:
                     error = UserInput.get_error(self, 'Minimaal 3 karakters', 100, 300)
                     
@@ -174,7 +174,7 @@ class UserInput():
                             self.user_id = self.user_id
                             self.input = ''
                             self.clicked = False
-                    elif self.editing:
+                    elif self.editing and not(characters):
                         self.user_list.edit_user(self.current_user, self.input)
                         self.found = False
                         self.pressed_enter = False
