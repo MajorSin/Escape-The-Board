@@ -48,6 +48,8 @@ def draw():
         image(tweegoed,0,340,200,200)
         tegenstander = loadImage("img/tegenstander_obstakel.png")
         image(tegenstander,-10,540,200,200)
+        textFont(createFont("data/Bungee-Regular.ttf", 33))
+        text("Klik links op een obstakel", 400, 200)
     
 def mousePressed():
     global moeilijk
