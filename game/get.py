@@ -47,3 +47,8 @@ class get:
                 height += 45
                 heightQuestion += 190
                 questions += 1
+        if questions == 1:
+                textFont(createFont("Segoe UI Bold", 19))
+                textSize(45)
+                text("Er zijn geen toegevoegde vragen!", 280, 240)
+            
