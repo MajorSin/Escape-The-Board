@@ -15,7 +15,7 @@ class moeilijkObstakel():
         data = json.loads(json_file.read())
         for i in range(len(data)):
             main = data[i]
-            if category == "standaard":
+            if category.lower() == "standaard":
                 if main['level'] == "moeilijk":
                     if i not in used_moeilijk:
                         index_random.append(i)

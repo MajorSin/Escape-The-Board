@@ -15,7 +15,7 @@ class tweeGoed():
         data = json.loads(json_file.read())
         for i in range(len(data)):
             main = data[i]
-            if category == "standaard":
+            if category.lower() == "standaard":
                 if main['level'] == "makkelijk":
                     if i not in used_makkelijk:
                         index_random.append(i)
@@ -39,7 +39,7 @@ class tweeGoed():
         data = json.loads(json_file.read())
         for i in range(len(data)):
             main2 = data[i]
-            if category == "standaard":
+            if category.lower() == "standaard":
                 if main2['level'] == "makkelijk":
                     if i not in used_makkelijk:
                         index_random.append(i)
