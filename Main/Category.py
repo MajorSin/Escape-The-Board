@@ -1,12 +1,14 @@
 import CategoryMain
+import Router
 
 class Category():
     chosen_category = ''
     hovered_question = False
     hovered_obstacle = False
     
-    def __init__(self, category_question):
+    def __init__(self, category_question, obstakel):
         self.category_question = category_question
+        self.obstakel = obstakel
         
     #Gereed stellen wat nodig is.
     def prep(self):
@@ -114,3 +116,15 @@ class Category():
                 category = 'Wiskunde'
             
             self.category_question.prepare_question(category)
+        #OBSTAKEL SCHERM WORDT HIER GETOOND
+        elif mouse_x and (500 <= mouseY <= 800):
+            Router.set_screen('Obstakel')
+            category = ''
+            if self.chosen_category == 'Standard':
+                category = 'Standaard'
+            elif self.chosen_category == 'Knowledge':
+                category = 'Kennis'
+            else:
+                category = 'Wiskunde'
+                
+            self.obstakel.set_obstakel(category)

@@ -2,12 +2,13 @@ from CategoryButtons import *
 from Category import *
 from CategoryQuestion import *
 from Leaderboard import *
+from obstakelScreen import *
 
 #Alle objecten aanmaken die nodig zijn.
 leaderboard = Leaderboard([], 1)
 category_buttons = CategoryButtons()
 category_question = CategoryQuestion(leaderboard)
-category = Category(category_question)
+category = Category(category_question, obstakel())
 
 #Gereed stellen wat nodig is.
 def prep():

@@ -2,6 +2,8 @@ from UserCursor import *
 import InterfaceMain, UserInputMain, CategoryMain
 from VraagInvoegen import *
 VraagInvoegen = VraagInvoegen()
+from obstakelScreen import *
+obstakel = obstakel()
 
 user_cursor = UserCursor()
 
@@ -27,6 +29,8 @@ def display_screen():
         CategoryMain.data()
     elif current_screen == 'QuestionInput':
         VraagInvoegen.display()
+    elif current_screen == 'Obstakel':
+        obstakel.display()
         
     user_cursor.display()
 
@@ -41,6 +45,8 @@ def set_screen(screen):
         current_screen = 'CategoryMain'
     elif screen == 'QuestionInput':
         current_screen = 'QuestionInput'
+    elif screen == 'Obstakel':
+        current_screen = 'Obstakel'
     
 #Zorgt dat klikken wordt bijgehouden.
 def mousePressed():
@@ -52,6 +58,8 @@ def mousePressed():
         CategoryMain.mousePressed()
     elif current_screen == 'QuestionInput':
         VraagInvoegen.mousePressed()
+    elif current_screen == 'Obstakel':
+        obstakel.mousePressed()
         
 
 def keyPressed():
