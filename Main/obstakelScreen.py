@@ -21,6 +21,7 @@ class obstakel():
     tweeAntwoord = False
     tegenstander = False
     tegenstanderAntwoord = False
+    goedKnop = False
     
     def display(self):
         bgVImg = loadImage("images/Vachtergrond.jpg")
@@ -140,6 +141,12 @@ class obstakel():
                 if self.tegenstanderAntwoord == True:
                     fill(250,250,250)
                     text(main['answer'], 240, 430)
+        #VRAAG GOED KNOP
+        if self.goedKnop:
+            fill('#00a023')
+            rect(1000, 500, 200, 100)
+            fill(0)
+            text('VRAAG \n  GOED', 1040, 543)
         
     def set_obstakel(self, category):
         global current_category
@@ -150,6 +157,7 @@ class obstakel():
         global moeilijk
         global main
         global main2
+        global goedKnop
         #MOEILIJK VRAAG OBSTAKEL KNOP
         if 0 < mouseX < 0 + 200 and 120 < mouseY < 120 + 200:
             self.moeilijk = True
@@ -159,6 +167,7 @@ class obstakel():
             self.tegenstanderAntwoord = False
             self.basisObstakel = False
             self.moeilijkAntwoord = False
+            self.goedKnop = False
             main = moeilijkObstakel.inhoud(current_category)
         #TWEE GOED OBSTAKEL KNOP
         elif 0 < mouseX < 0 + 200 and 340 < mouseY < 340 + 200:
@@ -169,6 +178,7 @@ class obstakel():
             self.tegenstanderAntwoord = False
             self.moeilijkAntwoord = False
             self.basisObstakel = False
+            self.goedKnop = False
             main = tweeGoed.vraagEen(current_category)
             main2 = tweeGoed.vraagTwee(current_category)
         #VRAAG AAN TEGENSTANDER KNOP
@@ -180,19 +190,23 @@ class obstakel():
             self.tegenstanderAntwoord = False
             self.moeilijkAntwoord = False
             self.basisObstakel = False
+            self.goedKnop = False
             main = tegenstander.vraag(current_category)
         #MOEILIJK VRAAG ANWOORD
         if 240 < mouseX < 240 + 475 and 290 < mouseY < 290 + 100 and self.moeilijk == True:
             self.moeilijkAntwoord = True
             moeilijkObstakel.antwoord()
+            self.goedKnop = True
         #TWEE VRAGEN ANTWOORD
         elif 240 < mouseX < 240 + 475 and 290 < mouseY < 290 + 100 and self.tweegoed == True:
             self.tweeAntwoord = True
             tweeGoed.antwoord()
+            self.goedKnop = True
         #VRAAG AAN TEGENSTANDER ANTWOORD
         elif 240 < mouseX < 240 + 475 and 290 < mouseY < 290 + 100 and self.tegenstander == True:
             self.tegenstanderAntwoord = True
             tegenstander.antwoord()
+            self.goedKnop = True
         #ANNULEER KNOP
         if 60 < mouseX < 60 + 250 and 20 < mouseY < 20+80:
             self.show_answer = False
