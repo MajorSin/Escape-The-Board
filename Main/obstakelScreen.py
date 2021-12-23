@@ -5,10 +5,7 @@ tweeGoed =tweeGoed()
 from tegenstander import *
 tegenstander = tegenstander()
 
-import Router
-import json
-import random
-import sys
+import Router, json, random, sys, CategoryMain
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -22,20 +19,42 @@ class obstakel():
     tegenstander = False
     tegenstanderAntwoord = False
     goedKnop = False
+    current_user = 0
+    user_list = []
     
-    def display(self):
+    def prep(self):
+        global bgVImg
         bgVImg = loadImage("images/Vachtergrond.jpg")
+
+        global font
+        font = createFont("Segoe UI Bold", 40)
+        
+        global moeilijk_picture
+        moeilijk_picture = loadImage("images/moeilijk_obstakel.png")
+        
+        global twee_goed_picture
+        twee_goed_picture = loadImage("images/2goed_obstakel.png")
+        
+        global tegenstander_picture
+        tegenstander_picture = loadImage("images/tegenstander_obstakel.png")
+        
+        global bungee33
+        bungee33 = createFont("fonts/bungee-regular.ttf", 33)
+        
+        global bungee22
+        bungee22 = createFont("fonts/bungee-regular.ttf", 22)
+                
+    def display(self):
         noStroke()
         background(bgVImg)
         #ANNULEER
         fill(100)
         rect(60, 20, 250, 80)
         fill(250, 250, 250)
-        textFont(createFont("Segoe UI Bold", 25))
         textSize(32)
+        
         #CATEGORIE
-        subold = createFont('Segoe UI Bold', 40)
-        textFont(subold)
+        textFont(font)
         textSize(50)
         text('Annuleer', 77, 75)
         fill('#bcbcbc')
@@ -45,21 +64,20 @@ class obstakel():
             text('Categorie: ' + current_category.capitalize(), 820, 70)
         else:
             text('Categorie: ' + current_category.capitalize(), 710, 70)
+            
         #LAAT OBSTAKEL KNOPPEN ZIEN
-        moeilijk = loadImage("images/moeilijk_obstakel.png")
-        image(moeilijk,0,120,200,200)
-        tweegoed = loadImage("images/2goed_obstakel.png")
-        image(tweegoed,0,340,200,200)
-        tegenstander = loadImage("images/tegenstander_obstakel.png")
-        image(tegenstander,-10,540,200,200)
-        textFont(createFont("fonts/bungee-regular.ttf", 33))
+        image(moeilijk_picture,0,120,200,200)
+        image(twee_goed_picture,0,340,200,200)
+        image(tegenstander_picture,-10,540,200,200)
+        
+        textFont(bungee33)
         if self.basisObstakel:
             text("Klik links op een obstakel", 400, 200)
         elif self.moeilijk:
             if main == 'empty':
                 text("Er zijn geen vragen meer!",400,150)
             else:
-                textFont(createFont("fonts/bungee-regular.ttf", 22))
+                textFont(bungee22)
                 fill(250,250,250)
                 text(main['question'],250,150)
                 if main['type'] == "mtp":
@@ -84,7 +102,7 @@ class obstakel():
             if main == 'empty' or main2 == 'empty':
                 text("Er zijn geen vragen meer!",400,150)
             else:
-                textFont(createFont("fonts/bungee-regular.ttf", 22))
+                textFont(bungee22)
                 fill(250,250,250)
                 text("1: " + main['question'],250,150)
                 text("2: " + main2['question'],250,260)
@@ -120,7 +138,7 @@ class obstakel():
             if main == 'empty':
                 text("Er zijn geen vragen meer!",400,150)
             else:
-                textFont(createFont("fonts/bungee-regular.ttf", 22))
+                textFont(bungee22)
                 fill(250,250,250)
                 text(main['question'],250,150)
                 if main['type'] == "mtp":
@@ -146,8 +164,37 @@ class obstakel():
             fill('#00a023')
             rect(1000, 500, 200, 100)
             fill(0)
-            text('VRAAG \n  GOED', 1040, 543)
+            if self.tweegoed:
+                text('VRAGEN \n   GOED', 1035, 543)
+            else:
+                text('VRAAG \n  GOED', 1040, 543)
+                
+        textFont(font)
+        textSize(30)
         
+        id = self.current_user
+        if id == 1:
+            fill('#D26466')
+        elif id == 2:
+            fill('#A7C7E7')
+        elif id == 3:
+            fill('#77dd77')
+        else:
+            fill('#FDFD96')
+        
+        users = self.user_list
+        name = ''
+        for user in users:
+            if user.id == id:
+                name = user.name
+                
+        text('Speler ' + str(self.current_user) + ': ' + str(name) + ' ' + 'is aan de beurt', 430, 690)
+    
+    def prepare_player(self):
+        leaderboard = CategoryMain.get_leaderboard()
+        self.current_user = leaderboard.current_user
+        self.user_list = leaderboard.user_list
+                                        
     def set_obstakel(self, category):
         global current_category
         current_category = category
@@ -209,9 +256,34 @@ class obstakel():
             self.goedKnop = True
         #ANNULEER KNOP
         if 60 < mouseX < 60 + 250 and 20 < mouseY < 20+80:
+            leaderboard = CategoryMain.get_leaderboard()
+            if self.moeilijk:
+                for user in self.user_list:
+                    if user.id == self.current_user:
+                        if not(user.score == 0):
+                            if user.score == 1:
+                                user.score -=1
+                            else:
+                                user.score -=2
+            leaderboard.next_user()
             self.show_answer = False
             Router.set_screen('CategoryMain')
             self.moeilijk = False
             self.tweegoed = False
             self.tegenstander = False
+            self.basisObstakel = True
+        #GOEDKNOP
+        if (1000 <= mouseX <= 1200) and (500 <= mouseY <= 600) and self.goedKnop == True:
+            leaderboard = CategoryMain.get_leaderboard()
+            if self.moeilijk:
+                for user in self.user_list:
+                    if user.id == self.current_user:
+                        user.score += 3
+            leaderboard.next_user()
+            self.show_answer = False
+            Router.set_screen('CategoryMain')
+            self.moeilijk = False
+            self.tweegoed = False
+            self.tegenstander = False
+            self.goedKnop = False
             self.basisObstakel = True

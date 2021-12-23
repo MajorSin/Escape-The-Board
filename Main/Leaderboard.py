@@ -31,6 +31,8 @@ class Leaderboard():
         fill(40, 64, 66, 120)
         rect(800, 290, 480, 430)
         
+        self.user_list = sorted(self.user_list, key= lambda x: x.score, reverse = True)
+        
         temp = 380
         for user in self.user_list:
             textFont(user_font)
@@ -57,6 +59,4 @@ class Leaderboard():
         for user in self.user_list:
             if user.id == self.current_user:
                 user.score += 1
-        order_players = sorted(self.user_list, key= lambda x: x.score, reverse = True)
-        self.user_list = order_players
         

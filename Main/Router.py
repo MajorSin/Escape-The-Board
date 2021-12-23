@@ -16,6 +16,7 @@ def prep():
     UserInputMain.prep()
     CategoryMain.prep()
     VraagInvoegen.prep()
+    obstakel.prep()
 
 #Laadt alles in wat getoond moet worden.
 def display_screen():
@@ -35,6 +36,7 @@ def display_screen():
         
     user_cursor.display()
 
+#Veranderd het scherm op basis van de screen waarde.
 def set_screen(screen):
     global current_screen
     
@@ -48,6 +50,7 @@ def set_screen(screen):
         current_screen = 'QuestionInput'
     elif screen == 'Obstakel':
         current_screen = 'Obstakel'
+        obstakel.prepare_player()
     
 #Zorgt dat klikken wordt bijgehouden.
 def mousePressed():

@@ -55,6 +55,25 @@ class CategoryQuestion():
             text('Categorie: ' + self.current_category, 710, 70)
         
         CategoryQuestion.loadQuestion(self)
+        
+        id = self.leaderboard.current_user
+        if id == 1:
+            fill('#D26466')
+        elif id == 2:
+            fill('#A7C7E7')
+        elif id == 3:
+            fill('#77dd77')
+        else:
+            fill('#FDFD96')
+        
+        users = self.leaderboard.user_list
+        name = ''
+        for user in users:
+            if user.id == id:
+                name = user.name
+                
+        text('Speler ' + str(self.leaderboard.current_user) + ': ' + str(name) + ' ' + 'is aan de beurt', 430, 690)
+        
         CategoryQuestion.check(self)
     
     #Zorgt dat hoveren over knoppen wordt bijgehouden.
@@ -176,24 +195,6 @@ class CategoryQuestion():
         textFont(font)
         textSize(30)
         text('Laat antwoord zien', 915, 545)
-    
-        id = self.leaderboard.current_user
-        if id == 1:
-            fill('#D26466')
-        elif id == 2:
-            fill('#A7C7E7')
-        elif id == 3:
-            fill('#77dd77')
-        else:
-            fill('#FDFD96')
-        
-        users = self.leaderboard.user_list
-        name = ''
-        for user in users:
-            if user.id == id:
-                name = user.name
-                
-        text('Speler ' + str(self.leaderboard.current_user) + ': ' + str(name) + ' ' + 'is aan de beurt', 430, 690)
         
     def mousePressed(self):        
         #Zorgt dat functies worden uitgevoert als een knop is geklikt.
