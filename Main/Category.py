@@ -1,10 +1,11 @@
-import CategoryMain
+import UserInputMain, CategoryMain
 import Router
 
 class Category():
     chosen_category = ''
     hovered_question = False
     hovered_obstacle = False
+    hovered_return = False
     
     def __init__(self, category_question, obstakel):
         self.category_question = category_question
@@ -25,6 +26,9 @@ class Category():
         global skull_image_obstacle
         skull_image_obstacle = loadImage("images/skull.png")
         skull_image_obstacle.resize(140, 140)
+        
+        global bungee32
+        bungee32 = createFont("fonts/bungee-regular.ttf", 32)
         
     #Laadt alles in wat getoond moet worden.
     def display(self):
@@ -51,6 +55,20 @@ class Category():
             fill(255)
             text('Wiskunde', 360, 120)
         
+        fill(100)
+        stroke(100)
+        rect(40, 25, 220, 120, 15)
+        
+        if self.hovered_return:
+            fill('#00f1fe')
+        else:
+            fill(255)
+        
+        textFont(bungee32)
+        textSize(40)
+        text('Herstart', 40.3, 100)
+        
+        stroke(0)
         fill(0)
         rect(110, 200, 600, 270)
         
@@ -92,9 +110,12 @@ class Category():
             self.hovered_question = True
         elif mouse_x and (500 <= mouseY <= 680):
             self.hovered_obstacle = True
+        elif (40 <= mouseX <= 260) and (25 <= mouseY <= 145):
+            self.hovered_return = True
         else:
             self.hovered_question = False
             self.hovered_obstacle = False
+            self.hovered_return = False
     
     #Categorie wordt hierdoor aangepast.
     def set_category(self, category):
@@ -128,3 +149,6 @@ class Category():
                 category = 'Wiskunde'
                 
             self.obstakel.set_obstakel(category)
+        elif (40 <= mouseX <= 260) and (25 <= mouseY <= 145):
+            Router.set_screen('UserInputMain')
+            UserInputMain.reset_players()

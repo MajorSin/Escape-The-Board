@@ -196,7 +196,7 @@ class UserInput():
                     else:
                         self.found = False
                         self.pressed = True
-                        self.current_user = 0
+                        self.current_user = int(key)
         elif self.deleting:
             if '1' <= key <= '4':
                 for user in self.user_list.users:
@@ -207,11 +207,12 @@ class UserInput():
                         self.found = True
                         self.pressed = True
                         self.current_user = int(key)
+                        print(self.current_user)
                         break
                     else:
                         self.found = False
                         self.pressed = True
-                        self.current_user = 0 
+                        self.current_user = int(key) 
                                     
     def mousePressed(self):
         if (120 <= mouseX <= 720) and (340 <= mouseY <= 440):

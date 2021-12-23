@@ -21,8 +21,13 @@ class VraagInvoegen():
         return JOptionPane.showInputDialog(frame, message)
 
     def prep(self):
+        get.prep()
+        post.prep()
         global evil32
         evil32 = createFont("fonts/evil-empire.otf", 32)
+        
+        global bgImg
+        bgImg = loadImage("images/main-background.jpg")
 
     def display(self):
         textFont(evil32)
@@ -57,7 +62,6 @@ class VraagInvoegen():
             text("Input is leeg of u heeft ergens een typefout gemaakt",410,120)
         else:
             #BASISSCHERM
-            bgImg = loadImage("images/main-background.jpg")
             background(bgImg)
             noStroke()
             textSize(50)

@@ -2,12 +2,11 @@
 import json
 
 class post():
-    def set(self):
-        bgImg = loadImage("img/achtergrond.jpg")
-        background(bgImg)
+    def prep(self):
+        global bgImg
+        bgImg = loadImage("images/main-background.jpg")
     
     def display(self, vraag, antwoord, category, graad):
-        bgImg = loadImage("images/main-background.jpg")
         background(bgImg)
         #GA TERUG
         textFont(createFont("Segoe UI Bold", 32))

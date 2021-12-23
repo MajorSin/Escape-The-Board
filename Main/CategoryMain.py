@@ -52,7 +52,9 @@ def set_screen(screen):
         current_screen == 'Categories'
         
 def set_leaderboard(user_list):
+    category.chosen_category = ''
     leaderboard.user_list = user_list
+    leaderboard.current_user = 1
     
 #Zorgt dat klikken wordt bijgehouden.
 def mousePressed():

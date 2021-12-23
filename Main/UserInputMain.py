@@ -21,6 +21,9 @@ def data():
     user_input.display()
     user_buttons.display()
 
+def reset_players():
+    user_list.reset_players()
+    
 #Zorgt dat klikken wordt bijgehouden.
 def mousePressed():
     user_input.mousePressed()

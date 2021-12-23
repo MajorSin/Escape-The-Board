@@ -158,6 +158,7 @@ class UserButtons():
             Router.set_screen('InterfaceMain')
         elif continue_l:
             if len(self.user_list.users) >= 2 and Router.current_screen == 'UserInputMain':
-                Router.set_screen('CategoryMain')
                 CategoryMain.set_leaderboard(self.user_list.users)
+                CategoryMain.set_screen('Categories')
+                Router.set_screen('CategoryMain')
             

@@ -4,13 +4,12 @@ import json
 #GET DATA FROM JSON
 
 class get():
-    def set(self):
+    def prep(self):
         #SET BG
-        bgImg = loadImage("images/achtergrond.jpg")
-        background(bgImg)
+        global bgImg
+        bgImg = loadImage("images/main-background.jpg")
         
     def display(self):
-        bgImg = loadImage("images/main-background.jpg")
         background(bgImg)
         fill(0, 102, 153)
         #GA TERUG

@@ -61,3 +61,7 @@ class UserList():
     #Maakt de lijst met gebruikers leeg.
     def reset_list(self):
         self.users = []
+    
+    def reset_players(self):
+        for user in self.users:
+            user.score = 0

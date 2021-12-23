@@ -15,6 +15,7 @@ def prep():
     InterfaceMain.prep()
     UserInputMain.prep()
     CategoryMain.prep()
+    VraagInvoegen.prep()
 
 #Laadt alles in wat getoond moet worden.
 def display_screen():

@@ -57,3 +57,6 @@ class Leaderboard():
         for user in self.user_list:
             if user.id == self.current_user:
                 user.score += 1
+        order_players = sorted(self.user_list, key= lambda x: x.score, reverse = True)
+        self.user_list = order_players
+        
