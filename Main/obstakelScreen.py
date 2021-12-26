@@ -21,6 +21,8 @@ class obstakel():
     goedKnop = False
     current_user = 0
     user_list = []
+    chosen = False
+    player_chosen = 0
     
     def prep(self):
         global bgVImg
@@ -159,7 +161,48 @@ class obstakel():
                 if self.tegenstanderAntwoord == True:
                     fill(250,250,250)
                     text(main['answer'], 240, 430)
+                if not(self.chosen):
+                    fill(50)
+                    rect(300, 200, 780, 420)
+                    fill(255)
+                    text('    Toets het nummer van de speler \n die deze vraag moet beantwoorden', 380, 260)
+                    temp = 390
+                    for user in self.user_list:
+                        if not(user.id == self.current_user):
+                            textFont(font)
+                            if user.id == 1:
+                                fill('#D26466')
+                            elif user.id == 2:
+                                fill('#A7C7E7')
+                            elif user.id == 3:
+                                fill('#77dd77')
+                            else:
+                                fill('#FDFD96')
+                            text(str(user.id) + '. ' + str(user.name), 550, temp)
+                            text(str(user.score), 800, temp)
+                            temp += 70
+                else:
+                    id = self.player_chosen
+                    if id == 1:
+                        fill('#D26466')
+                    elif id == 2:
+                        fill('#A7C7E7')
+                    elif id == 3:
+                        fill('#77dd77')
+                    else:
+                        fill('#FDFD96')
+                    
+                    users = self.user_list
+                    name = ''
+                    for user in users:
+                        if user.id == id:
+                            name = user.name
+                    textFont(font)
+                    textSize(35)
+                    text('Speler ' + str(self.player_chosen) + ': ' + str(name) + ' ' + 'is gekozen en moet antwoorden', 300, 640)
+                    
         #VRAAG GOED KNOP
+        textFont(bungee33)
         if self.goedKnop:
             fill('#00a023')
             rect(1000, 500, 200, 100)
@@ -215,6 +258,7 @@ class obstakel():
             self.basisObstakel = False
             self.moeilijkAntwoord = False
             self.goedKnop = False
+            self.chosen = False
             main = moeilijkObstakel.inhoud(current_category)
         #TWEE GOED OBSTAKEL KNOP
         elif 0 < mouseX < 0 + 200 and 340 < mouseY < 340 + 200:
@@ -226,6 +270,7 @@ class obstakel():
             self.moeilijkAntwoord = False
             self.basisObstakel = False
             self.goedKnop = False
+            self.chosen = False
             main = tweeGoed.vraagEen(current_category)
             main2 = tweeGoed.vraagTwee(current_category)
         #VRAAG AAN TEGENSTANDER KNOP
@@ -238,6 +283,7 @@ class obstakel():
             self.moeilijkAntwoord = False
             self.basisObstakel = False
             self.goedKnop = False
+            self.chosen = False
             main = tegenstander.vraag(current_category)
         #MOEILIJK VRAAG ANWOORD
         if 240 < mouseX < 240 + 475 and 290 < mouseY < 290 + 100 and self.moeilijk == True:
@@ -250,7 +296,7 @@ class obstakel():
             tweeGoed.antwoord()
             self.goedKnop = True
         #VRAAG AAN TEGENSTANDER ANTWOORD
-        elif 240 < mouseX < 240 + 475 and 290 < mouseY < 290 + 100 and self.tegenstander == True:
+        elif 240 < mouseX < 240 + 475 and 290 < mouseY < 290 + 100 and self.tegenstander == True and self.chosen:
             self.tegenstanderAntwoord = True
             tegenstander.antwoord()
             self.goedKnop = True
@@ -262,15 +308,31 @@ class obstakel():
                     if user.id == self.current_user:
                         if not(user.score == 0):
                             if user.score == 1:
-                                user.score -=1
+                                user.score -= 1
                             else:
-                                user.score -=2
+                                user.score -= 2
+            elif self.tweegoed:
+                for user in self.user_list:
+                    if user.id == self.current_user:
+                        user.jailed = True
+            elif self.tegenstander:
+                if self.chosen:
+                    for user in self.user_list:
+                        if user.id == self.player_chosen:
+                            if not(user.score == 0):
+                                user.score -= 1
+                    for user in self.user_list:
+                        if user.id == self.current_user:
+                            user.score += 1
+                
             leaderboard.next_user()
             self.show_answer = False
             Router.set_screen('CategoryMain')
             self.moeilijk = False
             self.tweegoed = False
             self.tegenstander = False
+            self.chosen = False
+            self.player_chosen = 0
             self.basisObstakel = True
         #GOEDKNOP
         if (1000 <= mouseX <= 1200) and (500 <= mouseY <= 600) and self.goedKnop == True:
@@ -279,6 +341,10 @@ class obstakel():
                 for user in self.user_list:
                     if user.id == self.current_user:
                         user.score += 3
+            elif self.tweegoed:
+                for user in self.user_list:
+                    if user.id == self.current_user:
+                        user.score += 1
             leaderboard.next_user()
             self.show_answer = False
             Router.set_screen('CategoryMain')
@@ -286,4 +352,17 @@ class obstakel():
             self.tweegoed = False
             self.tegenstander = False
             self.goedKnop = False
+            self.chosen = False
+            self.player_chosen = 0
             self.basisObstakel = True
+            
+    def keyPressed(self):
+        if not(self.chosen):
+            if '1' <= key <= '4':
+                for user in self.user_list:
+                    if user.id == int(key) and not(user.id == self.current_user):
+                        self.player_chosen = int(key)
+                        self.chosen = True
+                        break
+                    else:
+                        continue

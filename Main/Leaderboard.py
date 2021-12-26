@@ -15,6 +15,10 @@ class Leaderboard():
         global user_font
         user_font = createFont('Segoe UI Bold', 50)
         
+        global right_arrow
+        right_arrow = loadImage("images/right-arrow.png")
+        right_arrow.resize(50, 50)
+        
     #Laadt alles in wat getoond moet worden.
     def display(self):
         fill(0)
@@ -32,7 +36,7 @@ class Leaderboard():
         rect(800, 290, 480, 430)
         
         self.user_list = sorted(self.user_list, key= lambda x: x.score, reverse = True)
-        
+                
         temp = 380
         for user in self.user_list:
             textFont(user_font)
@@ -44,8 +48,12 @@ class Leaderboard():
                 fill('#77dd77')
             else:
                 fill('#FDFD96')
-                
-            text(str(user.id) + '. ' + str(user.name), 850, temp)
+         
+            if user.id == self.current_user:
+                image(right_arrow, 840, temp - 40)
+                text(str(user.id) + '. ' + str(user.name), 900, temp)
+            else:
+                text(str(user.id) + '. ' + str(user.name), 850, temp)
             text(str(user.score), 1200, temp)
             temp += 90
             
@@ -54,9 +62,22 @@ class Leaderboard():
             self.current_user = 1
         else:
             self.current_user += 1
-            
+        for user in self.user_list:
+            if user.id == self.current_user:
+                if user.jailed == True:
+                    if self.current_user == len(self.user_list):
+                        self.current_user = 1
+                        for user2 in self.user_list:
+                            if user2.id == self.current_user:
+                                if user2.jailed == True:
+                                    self.current_user += 1
+                                    user2.jailed = False
+                    else:
+                        self.current_user += 1
+                user.jailed = False
+                        
+                    
     def increment_score(self):
         for user in self.user_list:
             if user.id == self.current_user:
                 user.score += 1
-        

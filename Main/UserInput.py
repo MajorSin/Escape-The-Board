@@ -143,7 +143,7 @@ class UserInput():
                 if not(self.input):
                     self.input += key.capitalize()
                 else:
-                    if len(self.input) < 14:
+                    if len(self.input) < 7:
                         self.input += key
             elif key == BACKSPACE:
                 self.input = self.input[:-1]
@@ -207,7 +207,6 @@ class UserInput():
                         self.found = True
                         self.pressed = True
                         self.current_user = int(key)
-                        print(self.current_user)
                         break
                     else:
                         self.found = False

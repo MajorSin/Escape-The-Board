@@ -156,6 +156,8 @@ class UserButtons():
                 self.user_list.reset_list()
         elif return_l:
             Router.set_screen('InterfaceMain')
+            self.user_input.deleting = False
+            self.user_input.editing = False
         elif continue_l:
             if len(self.user_list.users) >= 2 and Router.current_screen == 'UserInputMain':
                 CategoryMain.set_leaderboard(self.user_list.users)

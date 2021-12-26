@@ -65,7 +65,8 @@ def mousePressed():
     elif current_screen == 'Obstakel':
         obstakel.mousePressed()
         
-
 def keyPressed():
     if current_screen == 'UserInputMain':
         UserInputMain.keyPressed()
+    elif current_screen == 'Obstakel':
+        obstakel.keyPressed()

@@ -65,3 +65,4 @@ class UserList():
     def reset_players(self):
         for user in self.users:
             user.score = 0
+            user.jailed = False

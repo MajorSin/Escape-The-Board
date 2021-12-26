@@ -3,3 +3,4 @@ class User():
         self.id = id
         self.name = name
         self.score = score
+        self.jailed = False
