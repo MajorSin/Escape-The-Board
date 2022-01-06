@@ -3,12 +3,14 @@ from Category import *
 from CategoryQuestion import *
 from Leaderboard import *
 from obstakelScreen import *
+from Timer import *
 
 #Alle objecten aanmaken die nodig zijn.
 leaderboard = Leaderboard([], 1)
+timer = Timer(0)
 category_buttons = CategoryButtons()
-category_question = CategoryQuestion(leaderboard)
-category = Category(category_question, obstakel())
+category_question = CategoryQuestion(leaderboard, timer)
+category = Category(category_question, obstakel(timer))
 
 #Gereed stellen wat nodig is.
 def prep():
@@ -25,8 +27,8 @@ def data():
     if current_screen == 'Categories':
         category_buttons.display()
     elif current_screen == 'Category':
-        category.display()
         leaderboard.display()
+        category.display()
     elif current_screen == 'Question':
         category_question.display()
     

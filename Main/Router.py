@@ -3,8 +3,10 @@ import InterfaceMain, UserInputMain, CategoryMain
 from VraagInvoegen import *
 VraagInvoegen = VraagInvoegen()
 from obstakelScreen import *
-obstakel = obstakel()
+from Timer import *
 
+timer = Timer(0)
+obstakel = obstakel(timer)
 user_cursor = UserCursor()
 
 #Gereed stellen wat nodig is.

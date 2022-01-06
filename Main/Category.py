@@ -6,6 +6,9 @@ class Category():
     hovered_question = False
     hovered_obstacle = False
     hovered_return = False
+    hovered_yes = False
+    hovered_no = False
+    reset_enabled = False
     
     def __init__(self, category_question, obstakel):
         self.category_question = category_question
@@ -33,7 +36,6 @@ class Category():
     #Laadt alles in wat getoond moet worden.
     def display(self):
         tint(255)
-        background(main_background)
         textFont(category_font)
         stroke(0)
         strokeWeight(10)
@@ -67,7 +69,7 @@ class Category():
         textFont(bungee32)
         textSize(40)
         text('Herstart', 40.3, 100)
-        
+            
         stroke(0)
         fill(0)
         rect(110, 200, 600, 270)
@@ -94,7 +96,39 @@ class Category():
             fill(255)
             
         text('OBSTAKEL \n  MELDEN', 320, 570)
-
+        
+        if self.reset_enabled:
+            fill(50)
+            rect(250, 200, 780, 420)
+            fill(255)
+            textSize(70)
+            text('Weet je het zeker?', 390, 300)
+            
+            stroke(50)
+            textSize(70)
+            
+            if self.hovered_yes:
+                fill('#00cc2d')
+            else:
+                fill('#00a023')
+                
+            rect(320, 400, 300, 150)
+            
+            fill(255)
+            text('Verder', 380, 500)
+            
+            if self.hovered_no:
+                fill('#cc1a1a')
+            else:
+                fill('#9f1414')
+            rect(660, 400, 300, 150)
+            
+            textSize(55)
+            fill(255)
+            text('Herstarten', 695, 495)
+            
+            stroke(0)
+                    
         #Houdt alle onderdelen in check bij.
         Category.check(self)
     
@@ -106,16 +140,22 @@ class Category():
     def mouse_over(self):
         mouse_x = 110 <= mouseX <= 710
         
-        if mouse_x and (200 <= mouseY <= 470):
+        if mouse_x and (200 <= mouseY <= 470) and not(self.reset_enabled):
             self.hovered_question = True
-        elif mouse_x and (500 <= mouseY <= 680):
+        elif mouse_x and (500 <= mouseY <= 680 and not(self.reset_enabled)):
             self.hovered_obstacle = True
-        elif (40 <= mouseX <= 260) and (25 <= mouseY <= 145):
+        elif (40 <= mouseX <= 260) and (25 <= mouseY <= 145) and not(self.reset_enabled):
             self.hovered_return = True
+        elif (320 <= mouseX <= 620) and (400 <= mouseY <= 550):
+            self.hovered_yes = True
+        elif (660 <= mouseX <= 960) and (400 <= mouseY <= 590):
+            self.hovered_no = True
         else:
             self.hovered_question = False
             self.hovered_obstacle = False
             self.hovered_return = False
+            self.hovered_yes = False
+            self.hovered_no = False
     
     #Categorie wordt hierdoor aangepast.
     def set_category(self, category):
@@ -125,7 +165,7 @@ class Category():
         mouse_x = 110 <= mouseX <= 710
         
         #Vraag scherm wordt hierdoor getoond.
-        if mouse_x and (200 <= mouseY <= 470):
+        if mouse_x and (200 <= mouseY <= 470) and not(self.reset_enabled):
             CategoryMain.set_screen('Question')
             category = ''
             
@@ -150,5 +190,10 @@ class Category():
                 
             self.obstakel.set_obstakel(category)
         elif (40 <= mouseX <= 260) and (25 <= mouseY <= 145):
+            self.reset_enabled = True
+        elif (320 <= mouseX <= 620) and (400 <= mouseY <= 550):
+            self.reset_enabled = False
+        elif (660 <= mouseX <= 960) and (400 <= mouseY <= 590):
+            self.reset_enabled = False
             Router.set_screen('UserInputMain')
             UserInputMain.reset_players()

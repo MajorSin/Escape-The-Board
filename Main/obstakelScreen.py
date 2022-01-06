@@ -23,7 +23,12 @@ class obstakel():
     user_list = []
     chosen = False
     player_chosen = 0
+    hovered_cancel = False
+    hovered_correct = False
     
+    def __init__(self, timer):
+        self.timer = timer
+                 
     def prep(self):
         global bgVImg
         bgVImg = loadImage("images/Vachtergrond.jpg")
@@ -49,23 +54,29 @@ class obstakel():
     def display(self):
         noStroke()
         background(bgVImg)
-        #ANNULEER
-        fill(100)
-        rect(60, 20, 250, 80)
-        fill(250, 250, 250)
-        textSize(32)
-        
         #CATEGORIE
+        fill(100)
         textFont(font)
-        textSize(50)
-        text('Annuleer', 77, 75)
+        textSize(45)
+        
+        if (self.moeilijk or self.tweegoed or self.tegenstander) and (self.timer.get_time() == 0 or self.goedKnop):
+            rect(60, 20, 200, 80)
+            
+            if self.hovered_cancel:
+                fill('#00f1fe')
+            else:
+                fill('#bcbcbc')
+                
+            text('Terug', 100, 75)
+            
         fill('#bcbcbc')
+        
         if current_category == 'Standaard':
-            text('Categorie: ' + current_category.capitalize(), 710, 70)
+            text('Categorie: ' + current_category.capitalize(), 800, 75)
         elif current_category == 'Kennis':
-            text('Categorie: ' + current_category.capitalize(), 820, 70)
+            text('Categorie: ' + current_category.capitalize(), 870, 75)
         else:
-            text('Categorie: ' + current_category.capitalize(), 710, 70)
+            text('Categorie: ' + current_category.capitalize(), 805, 75)
             
         #LAAT OBSTAKEL KNOPPEN ZIEN
         image(moeilijk_picture,0,120,200,200)
@@ -100,6 +111,19 @@ class obstakel():
                 if self.moeilijkAntwoord == True:
                     fill(250,250,250)
                     text(main['answer'], 240, 430)
+                
+                if not(self.timer.get_time() == 0) and not(self.goedKnop):
+                    self.timer.count_down()
+                
+                fill(255)
+                textSize(50)
+                
+                if self.timer.get_time() > 9:
+                    text(self.timer.get_time(), 590, 75)
+                else:
+                    text(self.timer.get_time(), 610, 75)
+                
+                textSize(45)
         elif self.tweegoed:
             if main == 'empty' or main2 == 'empty':
                 text("Er zijn geen vragen meer!",400,150)
@@ -136,6 +160,19 @@ class obstakel():
                     fill(250,250,250)
                     text(main['answer'], 240, 455)
                     text(main2['answer'], 240, 485)
+                
+                if not(self.timer.get_time() == 0) and not(self.goedKnop):
+                    self.timer.count_down()
+                
+                fill(255)
+                textSize(50)
+                
+                if self.timer.get_time() > 9:
+                    text(self.timer.get_time(), 590, 75)
+                else:
+                    text(self.timer.get_time(), 610, 75)
+                
+                textSize(45)
         elif self.tegenstander:
             if main == 'empty':
                 text("Er zijn geen vragen meer!",400,150)
@@ -200,11 +237,29 @@ class obstakel():
                     textFont(font)
                     textSize(35)
                     text('Speler ' + str(self.player_chosen) + ': ' + str(name) + ' ' + 'is gekozen en moet antwoorden', 300, 640)
+                
+                    if not(self.timer.get_time() == 0) and not(self.goedKnop):
+                        self.timer.count_down()
                     
+                    fill(255)
+                    textFont(bungee33)
+                    textSize(50)
+                    
+                    if self.timer.get_time() > 9:
+                        text(self.timer.get_time(), 590, 75)
+                    else:
+                        text(self.timer.get_time(), 610, 75)
+                    
+                    textFont(font)
+                    textSize(45)
         #VRAAG GOED KNOP
         textFont(bungee33)
         if self.goedKnop:
-            fill('#00a023')
+            if self.hovered_correct:
+                fill('#00cc2d')
+            else:
+                fill('#00a023')
+                
             rect(1000, 500, 200, 100)
             fill(0)
             if self.tweegoed:
@@ -232,7 +287,21 @@ class obstakel():
                 name = user.name
                 
         text('Speler ' + str(self.current_user) + ': ' + str(name) + ' ' + 'is aan de beurt', 430, 690)
+        
+        obstakel.check(self)
     
+    def check(self):
+        obstakel.mouse_over(self)
+    
+    def mouse_over(self):
+        if (60 <= mouseX <= 260) and (20 <= mouseY <= 100):
+            self.hovered_cancel = True
+        elif (1000 <= mouseX <= 1200) and (500 <= mouseY <= 600):
+            self.hovered_correct = True
+        else:
+            self.hovered_cancel = False
+            self.hovered_correct = False
+        
     def prepare_player(self):
         leaderboard = CategoryMain.get_leaderboard()
         self.current_user = leaderboard.current_user
@@ -260,6 +329,7 @@ class obstakel():
             self.goedKnop = False
             self.chosen = False
             main = moeilijkObstakel.inhoud(current_category)
+            self.timer.set_time(21)
         #TWEE GOED OBSTAKEL KNOP
         elif 0 < mouseX < 0 + 200 and 340 < mouseY < 340 + 200:
             self.moeilijk = False
@@ -273,6 +343,7 @@ class obstakel():
             self.chosen = False
             main = tweeGoed.vraagEen(current_category)
             main2 = tweeGoed.vraagTwee(current_category)
+            self.timer.set_time(21)
         #VRAAG AAN TEGENSTANDER KNOP
         elif 0 < mouseX < 0 + 200 and 540 < mouseY < 540 + 200:
             self.moeilijk = False
@@ -285,6 +356,7 @@ class obstakel():
             self.goedKnop = False
             self.chosen = False
             main = tegenstander.vraag(current_category)
+            self.timer.set_time(16)
         #MOEILIJK VRAAG ANWOORD
         if 240 < mouseX < 240 + 475 and 290 < mouseY < 290 + 100 and self.moeilijk == True:
             self.moeilijkAntwoord = True
@@ -301,7 +373,7 @@ class obstakel():
             tegenstander.antwoord()
             self.goedKnop = True
         #ANNULEER KNOP
-        if 60 < mouseX < 60 + 250 and 20 < mouseY < 20+80:
+        if (60 < mouseX < 60 + 250 and 20 < mouseY < 20+80) and (self.timer.get_time() == 0 or self.goedKnop):
             leaderboard = CategoryMain.get_leaderboard()
             if self.moeilijk:
                 for user in self.user_list:
@@ -332,10 +404,11 @@ class obstakel():
             self.tweegoed = False
             self.tegenstander = False
             self.chosen = False
+            self.goedKnop = False
             self.player_chosen = 0
             self.basisObstakel = True
         #GOEDKNOP
-        if (1000 <= mouseX <= 1200) and (500 <= mouseY <= 600) and self.goedKnop == True:
+        if (1000 <= mouseX <= 1200) and (500 <= mouseY <= 600) and self.goedKnop:
             leaderboard = CategoryMain.get_leaderboard()
             if self.moeilijk:
                 for user in self.user_list:

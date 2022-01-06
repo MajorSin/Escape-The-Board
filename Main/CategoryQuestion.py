@@ -6,10 +6,12 @@ class CategoryQuestion():
     current_category = ''
     hovered_cancel = False
     hovered_answer = False
+    hovered_correct = False
     show_answer = False
     
-    def __init__(self, leaderboard):
+    def __init__(self, leaderboard, timer):
         self.leaderboard = leaderboard
+        self.timer = timer
         
     #Gereed stellen wat nodig is.
     def prep(self):
@@ -28,31 +30,36 @@ class CategoryQuestion():
         global correct_font
         correct_font = createFont('fonts/bungee-regular.ttf', 50)
         
+        global bungee33
+        bungee33 = createFont("fonts/bungee-regular.ttf", 33)
+        
     #Laadt alles in wat getoond moet worden.
     def display(self):
         tint(120)
         image(main_background, 0, 0)
         
         fill(100)
-        rect(60, 20, 250, 80)
-        
-        if self.hovered_cancel:
-            fill('#00f1fe')
-        else:
-            fill('#bcbcbc')
-
         textFont(font)
-        textSize(50)
-        text('Annuleer', 77, 75)
+        textSize(45)
+        
+        if self.timer.get_time() == 0 or self.show_answer:
+            rect(60, 20, 200, 80)
+            
+            if self.hovered_cancel:
+                fill('#00f1fe')
+            else:
+                fill('#bcbcbc')
+                
+            text('Terug', 100, 75)
         
         fill('#bcbcbc')
         
         if self.current_category == 'Standaard':
-            text('Categorie: ' + self.current_category, 710, 70)
+            text('Categorie: ' + self.current_category, 800, 75)
         elif self.current_category == 'Kennis':
-            text('Categorie: ' + self.current_category, 820, 70)
+            text('Categorie: ' + self.current_category, 870, 75)
         else:
-            text('Categorie: ' + self.current_category, 710, 70)
+            text('Categorie: ' + self.current_category, 805, 75)
         
         CategoryQuestion.loadQuestion(self)
         
@@ -83,13 +90,16 @@ class CategoryQuestion():
     #Houdt bij of er met de muis is bewogen over locaties.
     def mouse_over(self):
 
-        if (60 <= mouseX <= 310) and (20 <= mouseY <= 100):
+        if (60 <= mouseX <= 260) and (20 <= mouseY <= 100):
             self.hovered_cancel = True
         elif (900 <= mouseX <= 1200) and (500 <= mouseY <= 570):
             self.hovered_answer = True
+        elif (70 <= mouseX <= 370) and (480 <= mouseY <= 630):
+            self.hovered_correct = True
         else:
             self.hovered_cancel = False
             self.hovered_answer = False
+            self.hovered_correct = False
     
     #Bereidt de vraag voor de speler.
     def prepare_question(self, category):
@@ -110,6 +120,8 @@ class CategoryQuestion():
             while self.question in self.used_makkelijk:
                 random_index = random.randint(0, 39)
                 self.question = [question for index, question  in enumerate(questions_from_category) if index == random_index]
+        
+        self.timer.set_time(16)
     
     #Toont de vraag die bereidt was.
     def loadQuestion(self):
@@ -177,8 +189,12 @@ class CategoryQuestion():
                     fill(255)
                     text('Antwoord: ' + str(self.question[0]['answer']), 73, 305)
                     
-        if self.show_answer:
-            fill('#00a023')
+        if self.show_answer and not(self.timer.get_time() == 0):
+            if self.hovered_correct:
+                fill('#00cc2d')
+            else:
+                fill('#00a023')
+                
             rect(70, 480, 300, 150)
             fill(0)
             textFont(correct_font)
@@ -196,16 +212,32 @@ class CategoryQuestion():
         textSize(30)
         text('Laat antwoord zien', 915, 545)
         
+        if not(self.timer.get_time() == 0) and not(self.show_answer):
+            self.timer.count_down()
+            
+        fill(255)
+        textFont(bungee33)
+        textSize(50)
+        
+        if self.timer.get_time() > 9:
+            text(self.timer.get_time(), 590, 75)
+        else:
+            text(self.timer.get_time(), 610, 75)
+        
+        textFont(font)
+        textSize(30)
+        
     def mousePressed(self):        
         #Zorgt dat functies worden uitgevoert als een knop is geklikt.
-        if (60 <= mouseX <= 310) and (20 <= mouseY <= 100):
+        if (60 <= mouseX <= 310) and (20 <= mouseY <= 100) and (self.timer.get_time() == 0 or self.show_answer):
             self.show_answer = False
+            self.hovered_cancel = False
             self.leaderboard.next_user()
             CategoryMain.set_screen('Category')
         elif (900 <= mouseX <= 1200) and (500 <= mouseY <= 570):
             self.show_answer = True
             self.used_makkelijk.append(self.question[0])
-        elif (70 <= mouseX <= 370) and (480 <= mouseY <= 630):
+        elif (70 <= mouseX <= 370) and (480 <= mouseY <= 630) and (not(self.timer.get_time() == 0) and self.show_answer):
             self.show_answer = False
             self.leaderboard.increment_score()
             self.leaderboard.next_user()

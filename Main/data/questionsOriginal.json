@@ -743,7 +743,7 @@
     {   
         "question": "Wat is het Italiaanse woord voor meester of leraar?",
         "A": "Maestro",
-        "B": "Maître",
+        "B": "Maitre",
         "C": "Meister",
         "answer": "A",
         "type": "mtp",

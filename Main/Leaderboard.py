@@ -5,6 +5,9 @@ class Leaderboard():
     
     #Gereed stellen wat nodig is.
     def prep(self):
+        global main_background
+        main_background = loadImage("images/main-background.jpg")
+        
         global leaderboard_image
         leaderboard_image = loadImage("images/leaderboard.png")
         leaderboard_image.resize(170, 170)
@@ -21,6 +24,8 @@ class Leaderboard():
         
     #Laadt alles in wat getoond moet worden.
     def display(self):
+        background(main_background)
+        
         fill(0)
         rect(800, 0, 480, 280)
         
