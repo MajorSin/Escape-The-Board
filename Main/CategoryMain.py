@@ -8,9 +8,9 @@ from Timer import *
 #Alle objecten aanmaken die nodig zijn.
 leaderboard = Leaderboard([], 1)
 timer = Timer(0)
-category_buttons = CategoryButtons()
 category_question = CategoryQuestion(leaderboard, timer)
-category = Category(category_question, obstakel(timer))
+category_buttons = CategoryButtons(category_question)
+category = Category(leaderboard, category_question, obstakel(timer))
 
 #Gereed stellen wat nodig is.
 def prep():
@@ -61,6 +61,9 @@ def set_leaderboard(user_list):
     leaderboard.user_list = user_list
     leaderboard.current_user = 1
 
+def reset_questions():
+    category_question.reset_questions()
+    
 #Zorgt dat klikken wordt bijgehouden.
 def mousePressed():
     if current_screen == 'Categories':

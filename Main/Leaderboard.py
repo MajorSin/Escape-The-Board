@@ -59,7 +59,11 @@ class Leaderboard():
                 text(str(user.id) + '. ' + str(user.name), 900, temp)
             else:
                 text(str(user.id) + '. ' + str(user.name), 850, temp)
-            text(str(user.score), 1200, temp)
+            
+            if user.score < 10:
+                text(str(user.score), 1200, temp)
+            else:
+                text(str(user.score), 1170, temp)
             temp += 90
             
     def next_user(self):

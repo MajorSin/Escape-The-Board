@@ -8,9 +8,12 @@ class Category():
     hovered_return = False
     hovered_yes = False
     hovered_no = False
+    hovered_restart = False
     reset_enabled = False
+    game_finished = False
     
-    def __init__(self, category_question, obstakel):
+    def __init__(self, leaderboard, category_question, obstakel):
+        self.leaderboard = leaderboard
         self.category_question = category_question
         self.obstakel = obstakel
         
@@ -39,7 +42,7 @@ class Category():
         textFont(category_font)
         stroke(0)
         strokeWeight(10)
-        
+                
         #Houdt bij welke categorie gekozen is.
         if self.chosen_category == 'Standard':
             fill('#2d42ab')
@@ -128,7 +131,72 @@ class Category():
             text('Herstarten', 695, 495)
             
             stroke(0)
+        elif self.category_question.out_of_questions:
+            fill(50)
+            rect(250, 200, 780, 420)
+            fill(255)
+            textSize(60)
+            text('Er zijn geen vragen meer', 350, 300)
+            
+            stroke(100)
+            fill(100)
+            rect(480, 400, 300, 100)
+            
+            if self.hovered_restart:
+                fill('#00f1fe')
+            else:
+                fill('#bcbcbc')
                     
+            text('Resetten', 535, 470)
+        
+        users = self.leaderboard.user_list
+        for user in users:
+            if user.score >= 20:
+                self.game_finished = True
+        
+        if self.game_finished:
+            fill(50)
+            rect(250, 200, 780, 420)
+            fill(255)
+            textSize(60)
+            for user in users:
+                if user.score >= 20:
+                    if user.id == 1:
+                        fill('#D26466')
+                    elif user.id == 2:
+                        fill('#A7C7E7')
+                    elif user.id == 3:
+                        fill('#77dd77')
+                    else:
+                        fill('#FDFD96')
+                    text('Speler ' + str(user.id) + ': ' + user.name, 493, 300)
+                    fill(255)
+                    text('Heeft het spel gewonnen!', 350, 370)
+            stroke(50)
+            textSize(70)
+            
+            if self.hovered_yes:
+                fill('#00cc2d')
+            else:
+                fill('#00a023')
+                
+            rect(320, 400, 300, 150)
+            
+            fill(255)
+            text('Exit', 415, 500)
+            
+            if self.hovered_no:
+                fill('#cc1a1a')
+            else:
+                fill('#9f1414')
+                
+            rect(660, 400, 300, 150)
+            textSize(55)
+            fill(255)
+            text('Herstarten', 695, 495)
+            
+        stroke(0)
+                
         #Houdt alle onderdelen in check bij.
         Category.check(self)
     
@@ -140,22 +208,27 @@ class Category():
     def mouse_over(self):
         mouse_x = 110 <= mouseX <= 710
         
-        if mouse_x and (200 <= mouseY <= 470) and not(self.reset_enabled):
+        if mouse_x and (200 <= mouseY <= 470) and not(self.reset_enabled or self.category_question.out_of_questions or self.game_finished):
             self.hovered_question = True
-        elif mouse_x and (500 <= mouseY <= 680 and not(self.reset_enabled)):
+            self.hovered_obstacle = False
+        elif mouse_x and (500 <= mouseY <= 680) and not(self.reset_enabled or self.category_question.out_of_questions or self.game_finished):
             self.hovered_obstacle = True
-        elif (40 <= mouseX <= 260) and (25 <= mouseY <= 145) and not(self.reset_enabled):
+            self.hovered_question = False
+        elif (40 <= mouseX <= 260) and (25 <= mouseY <= 145) and not(self.reset_enabled or self.category_question.out_of_questions or self.game_finished):
             self.hovered_return = True
-        elif (320 <= mouseX <= 620) and (400 <= mouseY <= 550):
+        elif (320 <= mouseX <= 620) and (400 <= mouseY <= 550) and (self.reset_enabled or self.game_finished):
             self.hovered_yes = True
-        elif (660 <= mouseX <= 960) and (400 <= mouseY <= 590):
+        elif (660 <= mouseX <= 960) and (400 <= mouseY <= 550) and (self.reset_enabled or self.game_finished):
             self.hovered_no = True
+        elif (480 <= mouseX <= 780) and (400 <= mouseY <= 500) and self.category_question.out_of_questions:
+            self.hovered_restart = True
         else:
             self.hovered_question = False
             self.hovered_obstacle = False
             self.hovered_return = False
             self.hovered_yes = False
             self.hovered_no = False
+            self.hovered_restart = False
     
     #Categorie wordt hierdoor aangepast.
     def set_category(self, category):
@@ -165,7 +238,8 @@ class Category():
         mouse_x = 110 <= mouseX <= 710
         
         #Vraag scherm wordt hierdoor getoond.
-        if mouse_x and (200 <= mouseY <= 470) and not(self.reset_enabled):
+        if mouse_x and (200 <= mouseY <= 470) and not(self.reset_enabled or self.category_question.out_of_questions or self.game_finished):
+            self.reset_enabled = False
             CategoryMain.set_screen('Question')
             category = ''
             
@@ -178,7 +252,7 @@ class Category():
             
             self.category_question.prepare_question(category)
         #OBSTAKEL SCHERM WORDT HIER GETOOND
-        elif mouse_x and (500 <= mouseY <= 800):
+        elif mouse_x and (500 <= mouseY <= 800) and not(self.reset_enabled or self.category_question.out_of_questions or self.game_finished):
             Router.set_screen('Obstakel')
             category = ''
             if self.chosen_category == 'Standard':
@@ -189,11 +263,24 @@ class Category():
                 category = 'Wiskunde'
                 
             self.obstakel.set_obstakel(category)
-        elif (40 <= mouseX <= 260) and (25 <= mouseY <= 145):
+        elif (40 <= mouseX <= 260) and (25 <= mouseY <= 145) and not(self.category_question.out_of_questions):
             self.reset_enabled = True
-        elif (320 <= mouseX <= 620) and (400 <= mouseY <= 550):
+        elif (320 <= mouseX <= 620) and (400 <= mouseY <= 550) and self.reset_enabled:
             self.reset_enabled = False
-        elif (660 <= mouseX <= 960) and (400 <= mouseY <= 590):
+        elif (320 <= mouseX <= 620) and (400 <= mouseY <= 550) and self.game_finished:
+            self.game_finished = False
+            exit()
+        elif (660 <= mouseX <= 960) and (400 <= mouseY <= 550) and self.reset_enabled:
             self.reset_enabled = False
             Router.set_screen('UserInputMain')
             UserInputMain.reset_players()
+            CategoryMain.reset_questions()
+        elif (660 <= mouseX <= 960) and (400 <= mouseY <= 550) and self.game_finished:
+            self.game_finished = False
+            Router.set_screen('UserInputMain')
+            UserInputMain.reset_players()
+            CategoryMain.reset_questions()
+        elif (480 <= mouseX <= 780) and (400 <= mouseY <= 500) and self.category_question.out_of_questions:
+            CategoryMain.set_screen('Categories')
+            CategoryMain.reset_questions()
+            self.category_question.out_of_questions = False

@@ -8,7 +8,8 @@ class CategoryQuestion():
     hovered_answer = False
     hovered_correct = False
     show_answer = False
-    
+    out_of_questions = False
+       
     def __init__(self, leaderboard, timer):
         self.leaderboard = leaderboard
         self.timer = timer
@@ -108,18 +109,20 @@ class CategoryQuestion():
         #Hier controleert de categorie en of het antwoord eerder is gezien.
         if category == 'Standaard':
             questions_from_category = [q for q in questions if q['level'] == 'makkelijk']
-            random_index = random.randint(0, 79)
-            self.question = [question for index, question  in enumerate(questions_from_category) if index == random_index]
-            while self.question[0] in self.used_makkelijk:
-                random_index = random.randint(0, 79)
+            if not(len(self.used_makkelijk) == len(questions_from_category)):
+                random_index = random.randint(0, len(questions_from_category) - 1)
                 self.question = [question for index, question  in enumerate(questions_from_category) if index == random_index]
+                while self.question[0] in self.used_makkelijk:
+                    random_index = random.randint(0, len(questions_from_category) - 1)
+                    self.question = [question for index, question  in enumerate(questions_from_category) if index == random_index]
         else:
             questions_from_category = [q for q in questions if q['category'] == category.lower() and q['level'] == 'makkelijk']
-            random_index = random.randint(0, 39)
-            self.question = [question for index, question  in enumerate(questions_from_category) if index == random_index]
-            while self.question in self.used_makkelijk:
-                random_index = random.randint(0, 39)
-                self.question = [question for index, question  in enumerate(questions_from_category) if index == random_index]
+            if not(len(self.used_makkelijk) == len(questions_from_category)):
+               random_index = random.randint(0, len(questions_from_category) - 1)
+               self.question = [question for index, question  in enumerate(questions_from_category) if index == random_index]
+               while self.question[0] in self.used_makkelijk:
+                    random_index = random.randint(0, len(questions_from_category) - 1) 
+                    self.question = [question for index, question  in enumerate(questions_from_category) if index == random_index]
         
         self.timer.set_time(16)
     
@@ -227,6 +230,10 @@ class CategoryQuestion():
         textFont(font)
         textSize(30)
         
+    def reset_questions(self):
+        self.used_makkelijk = []
+        self.out_of_questions = False
+        
     def mousePressed(self):        
         #Zorgt dat functies worden uitgevoert als een knop is geklikt.
         if (60 <= mouseX <= 310) and (20 <= mouseY <= 100) and (self.timer.get_time() == 0 or self.show_answer):
@@ -236,7 +243,12 @@ class CategoryQuestion():
             CategoryMain.set_screen('Category')
         elif (900 <= mouseX <= 1200) and (500 <= mouseY <= 570):
             self.show_answer = True
-            self.used_makkelijk.append(self.question[0])
+            if not(self.question[0] in self.used_makkelijk):
+                self.used_makkelijk.append(self.question[0])
+                questions_from_category = [q for q in questions if q['category'] == self.current_category.lower() and q['level'] == 'makkelijk']
+                if len(self.used_makkelijk) == len(questions_from_category):
+                    self.out_of_questions = True
+                    
         elif (70 <= mouseX <= 370) and (480 <= mouseY <= 630) and (not(self.timer.get_time() == 0) and self.show_answer):
             self.show_answer = False
             self.leaderboard.increment_score()

@@ -6,6 +6,9 @@ class CategoryButtons():
     math = 30
     hovered_return = False
     
+    def __init__(self, category_question):
+        self.category_question = category_question
+        
     #Gereed stellen wat nodig is.
     def prep(self):
         global title_background
